@@ -63,6 +63,21 @@ f_output = open("write.txt",'a+')
 f_output.seek(0)
 f_output.truncate()
 
+prog_count=0
+# prog_len=0
+
+# for line in f_input:
+#     prog_len+=1
+
+input_list = f_input.readlines()
+
+for i in range(len(input_list)):
+    input_list[i] = input_list[i].split()
+    if input_list[i][0]!='var':
+        prog_count+=1
+    if input_list[i][0]=='hlt' & i!=len(input_list)-1:
+        f_output.write('halt not in end\n')
+
 for line in f_input:
     line = line.split()
     
@@ -98,3 +113,9 @@ for line in f_input:
         string = op_codes_C[line[0]]+'00000'+(regs[line[1]]+regs[line[2]])
         string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type C"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
         f_output.write(string+"\n")
+
+
+    #type D
+    if line[0]=='var':
+        #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
+        pass
