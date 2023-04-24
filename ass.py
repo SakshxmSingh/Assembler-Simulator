@@ -71,7 +71,7 @@ for line in f_input:
         binary = bin(int(line[2])).replace("0b", "")        
                                                     #I have ignored the case where they give negative number as input.
         if len(binary) > 7:
-            string = "overflow error"
+            string = "overflow error" + " Type B" + " " + line[0] + " "+ line[1] +" "+ line[2]
             f_output.write(string+"\n")
         else:
             if len(binary) == 7:
