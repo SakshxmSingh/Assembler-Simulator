@@ -52,7 +52,6 @@ for line in f_input:
     
     #type A, error handling left
     if line[0] in op_codes_A:
-        string = ''
-        string += op_codes_A[line[0]]+'00'+(regs[line[1]]+regs[line[2]]+regs[line[3]])
+        string = op_codes_A[line[0]]+'00'+(regs[line[1]]+regs[line[2]]+regs[line[3]])
         string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16]
         f_output.write(string+"\n")
