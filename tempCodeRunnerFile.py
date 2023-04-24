@@ -60,20 +60,3 @@ for line in f_input:
         string = op_codes_A[line[0]]+'00'+(regs[line[1]]+regs[line[2]]+regs[line[3]])
         string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16]
         f_output.write(string+"\n")
-
-    elif line[0] in op_codes_B:
-        binary = bin(int(line[2])).replace("0b", "")
-        
-                                                    #I have ignored the case where they give negative number as input.
-        if len(binary) > 7:
-            string = "overflow error"
-            f_output.write(string+"\n")
-        else:
-            if len(binary) == 7:
-                pass  
-            elif len(binary) < 7:
-                binary = (7-len(binary))*"0"+binary        
-        
-            string = op_codes_B[line[0]] + '0'+ (regs[line[1]]) + binary
-            string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16]
-            f_output.write(string+"\n")

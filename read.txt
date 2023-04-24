@@ -2,3 +2,8 @@ add R0 R3 R4
 mul R2 R3 R5
 and R1 R0 R6
 or R3 R5 R4
+mov R1 35
+mov R1 129
+rs R2 35
+ls R5 0
+ls R4 12
