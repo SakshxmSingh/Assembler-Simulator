@@ -2,4 +2,4 @@
 Computer Organisation group project, Assembly Simulator
 
 
-No commits yet, neither any commitments
+a few commits, yet still no commitments
