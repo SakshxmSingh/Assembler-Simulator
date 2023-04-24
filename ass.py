@@ -31,9 +31,15 @@ op_codes_A = {
               'and':'01100'
              }
 op_codes_B = {
-              'mov':'00010',
+              'mov':'00011',
               'rs':'01000',
-              'ls':'01001',
+              'ls':'01101',
+              }
+op_codes_C = {
+              'mov':'00010',
+              'div':'00111',
+              'not':'01001',
+              'cmp':'01110'
               }
 
 regs = {
@@ -58,12 +64,11 @@ for line in f_input:
     #type A, error handling left
     if line[0] in op_codes_A:
         string = op_codes_A[line[0]]+'00'+(regs[line[1]]+regs[line[2]]+regs[line[3]])
-        string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16]
+        string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type A" + " " + line[0] + " "+ line[1] +" "+ line[2]+ " "+line[3]
         f_output.write(string+"\n")
 
-    elif line[0] in op_codes_B:
-        binary = bin(int(line[2])).replace("0b", "")
-        
+    elif (line[0] in op_codes_B) and ((line[2].isdigit())) : # this sorts the mov problem by checking reg or imm
+        binary = bin(int(line[2])).replace("0b", "")        
                                                     #I have ignored the case where they give negative number as input.
         if len(binary) > 7:
             string = "overflow error"
@@ -75,5 +80,10 @@ for line in f_input:
                 binary = (7-len(binary))*"0"+binary        
         
             string = op_codes_B[line[0]] + '0'+ (regs[line[1]]) + binary
-            string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16]
+            string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type B" + " " + line[0] + " "+ line[1] +" "+ line[2]
             f_output.write(string+"\n")
+
+    elif line[0] in op_codes_C:
+        string = op_codes_C[line[0]]+'00000'+(regs[line[1]]+regs[line[2]])
+        string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type C"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
+        f_output.write(string+"\n")
