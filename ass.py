@@ -117,7 +117,7 @@ for line in input_list:
         f_output.write(string+"\n")
 
 
-    #type D
+    #type D, needs to be tested
     if line[0]=='var':
         #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         vars.update({line[1]:bin(prog_count)[2:]})
