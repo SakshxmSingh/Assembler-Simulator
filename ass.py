@@ -90,12 +90,8 @@ for line in input_list:
         string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type A" + " " + line[0] + " "+ line[1] +" "+ line[2]+ " "+line[3]
         f_output.write(string+"\n")
 
-
-
-
-    #type B
-    elif (line[0] in op_codes_B) and ((line[2].isdigit())) : # this sorts the mov problem by checking reg or imm
-        binary = bin(int(line[2])).replace("0b", "")        
+    elif (line[0] in op_codes_B) and (line[2][0] == "$") : # this sorts the mov problem by checking reg or $imm
+        binary = bin(int(line[2][1:])).replace("0b", "")        
                                                     #I have ignored the case where they give negative number as input.
         if len(binary) > 7:
             string = "overflow error" + " Type B" + " " + line[0] + " "+ line[1] +" "+ line[2]
