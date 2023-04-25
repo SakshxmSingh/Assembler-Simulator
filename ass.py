@@ -31,12 +31,12 @@ op_codes_A = {
               'and':'01100'
              }
 op_codes_B = {
-              'mov':'00011',
+              'mov':'00010',
               'rs':'01000',
               'ls':'01101',
               }
 op_codes_C = {
-              'mov':'00010',
+              'mov':'00011',
               'div':'00111',
               'not':'01001',
               'cmp':'01110'
@@ -71,18 +71,23 @@ prog_count=0
 #     prog_len+=1
 
 input_list = f_input.readlines()
-
+halt_flag = False
 for i in range(len(input_list)):
     input_list[i] = input_list[i].split()
     if input_list[i][0]!='var':
         prog_count+=1
-    if input_list[i][0]=='hlt' & i!=len(input_list)-1:
+    if (input_list[i][0]=='hlt') and i!=len(input_list)-1:
+        halt_flag = True
         f_output.write('halt not in end\n')
+    elif input_list[i][0]=='hlt' and i==len(input_list)-1:
+        halt_flag=True
+if halt_flag==False:
+    f_output.write('halt not in program\n')
 
 vars = {}
 
 for line in input_list:
-    line = line.split()
+    # line = line.split()
     
     #type A, error handling left
     if line[0] in op_codes_A:
@@ -121,10 +126,10 @@ for line in input_list:
     if line[0]=='var':
         #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         vars.update({line[1]:bin(prog_count)[2:]})
-        if len(vars[line[1]]) == 8:
+        if len(vars[line[1]]) == 7:
             pass  
-        elif len(vars[line[1]]) < 8:
-            vars[line[1]] = (8-len(vars[line[1]]))*"0"+vars[line[1]]
+        elif len(vars[line[1]]) < 7:
+            vars[line[1]] = (7-len(vars[line[1]]))*"0"+vars[line[1]]
         prog_count+=1
     
     if line[0] in op_codes_D:
