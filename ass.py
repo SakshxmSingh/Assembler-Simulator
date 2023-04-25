@@ -63,6 +63,7 @@ f_output = open("write.txt",'a+')
 f_output.seek(0)
 f_output.truncate()
 
+
 prog_count=0
 # prog_len=0
 
@@ -78,7 +79,9 @@ for i in range(len(input_list)):
     if input_list[i][0]=='hlt' & i!=len(input_list)-1:
         f_output.write('halt not in end\n')
 
-for line in f_input:
+vars = {}
+
+for line in input_list:
     line = line.split()
     
     #type A, error handling left
@@ -118,4 +121,12 @@ for line in f_input:
     #type D
     if line[0]=='var':
         #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
-        pass
+        vars.update({line[1]:bin(prog_count)[2:]})
+        prog_count+=1
+    
+    if line[0] in op_codes_D:
+        if line[2] in vars:
+            string = op_codes_D[line[0]]+'0'+regs[line[1]]+vars[line[2]]
+            string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type D"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
+            f_output.write(string+"\n")
+
