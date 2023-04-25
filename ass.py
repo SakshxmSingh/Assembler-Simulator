@@ -121,6 +121,10 @@ for line in input_list:
     if line[0]=='var':
         #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         vars.update({line[1]:bin(prog_count)[2:]})
+        if len(vars[line[1]]) == 8:
+            pass  
+        elif len(vars[line[1]]) < 8:
+            vars[line[1]] = (8-len(vars[line[1]]))*"0"+vars[line[1]]
         prog_count+=1
     
     if line[0] in op_codes_D:
