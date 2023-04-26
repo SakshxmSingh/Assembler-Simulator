@@ -88,9 +88,9 @@ for i in range(len(input_list)):
     elif input_list[i][0] == 'hlt' and i == len(input_list)-1:
         halt_flag = True
     
-    if input_list[i][0]:
-        pass
-    
+    if input_list[i][0][-1] == ':':
+        labels.update({input_list[i][0][:len(input_list[i][0]) - 2]:bin(prog_count)[2:]})
+        prog_count += 1
 
 if (halt_flag == False) and (len(input_list) != 0):
     f_output.write('halt not in program\n')
@@ -107,7 +107,6 @@ for line in input_list:
         f_output.write(string + "\n")
 
 
-    
     #type B
     elif (line[0] in op_codes_B) and (line[2][0] == "$") : # this sorts the mov problem by checking reg or $imm
         binary = bin(int(line[2][1:])).replace("0b", "")        
@@ -128,7 +127,7 @@ for line in input_list:
 
     #type C
     elif line[0] in op_codes_C:
-        string = op_codes_C[line[0]] + '00000' + (regs[line[1]] + regs[line[2]])
+        string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type C" + " " + line[0] + " " + line[1] + " " + line[2]
         f_output.write(string + "\n")
 
@@ -150,9 +149,11 @@ for line in input_list:
             f_output.write(string + "\n")
 
 
-    #type E, under works
+    #type E, handle the error if label was never initialised
     if line[0] in op_codes_E:
-        pass
+        mem_addr = labels[line[1]]
+        string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
+        string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
 
 
     #type F, no need to test i hope
@@ -160,8 +161,6 @@ for line in input_list:
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
-
-
 
 
 
