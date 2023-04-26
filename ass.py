@@ -51,14 +51,22 @@ f_output = open("write.txt",'a+')
 f_output.seek(0)
 f_output.truncate()
 
+# welcome message
+f_output.write('------------\n')
+
+f_output.write("Welcome user.\nWelcome to a programme put into existence by the combined forces of users 2022434, 2022451, 2022351, 2022467.\n")
+f_output.write('------------------------------------------------------------------------------------------------------------\n')
+f_output.write('The programme has taken in your commands.\n')
+f_output.write('----------------------------------------\n')
 
 prog_count=0
-# prog_len=0
-
-# for line in f_input:
-#     prog_len+=1
 
 input_list = f_input.readlines()
+if len(input_list) == 0:
+    f_output.write('Error 256 detected: There were no instructions given. The programme has come to an end. \n')
+else:
+   f_output.write("The following output was generated.\n")
+   f_output.write('-----------------------------------\n')
 halt_flag = False
 for i in range(len(input_list)):
     input_list[i] = input_list[i].split()
@@ -69,7 +77,7 @@ for i in range(len(input_list)):
         f_output.write('halt not in end\n')
     elif input_list[i][0]=='hlt' and i==len(input_list)-1:
         halt_flag=True
-if halt_flag==False:
+if (halt_flag==False)and (len(input_list) != 0):
     f_output.write('halt not in program\n')
 
 vars = {}
@@ -134,3 +142,11 @@ for line in input_list:
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16]
         f_output.write(string + '\n')
+
+
+
+
+
+
+
+f_output.write('-----------------------------------------------------------------------------------------------------------------------\n')
