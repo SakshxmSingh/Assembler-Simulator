@@ -79,6 +79,9 @@ for i in range(len(input_list)):
     
     input_list[i] = input_list[i].split()
     
+    if input_list[i][0][-1] == ':':
+        labels.update({input_list[i][0][:len(input_list[i][0]) - 1]:bin(prog_count)[2:]})
+    
     if input_list[i][0] != 'var':
         prog_count += 1
     
@@ -88,9 +91,6 @@ for i in range(len(input_list)):
     elif input_list[i][0] == 'hlt' and i == len(input_list)-1:
         halt_flag = True
     
-    if input_list[i][0][-1] == ':':
-        labels.update({input_list[i][0][:len(input_list[i][0]) - 2]:bin(prog_count)[2:]})
-        prog_count += 1
 
 if (halt_flag == False) and (len(input_list) != 0):
     f_output.write('halt not in program\n')
@@ -154,6 +154,7 @@ for line in input_list:
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+        f_output.write(string + '\n')
 
 
     #type F, no need to test i hope
