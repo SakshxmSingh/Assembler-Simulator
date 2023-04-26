@@ -98,8 +98,10 @@ if (halt_flag == False) and (len(input_list) != 0):
 vars = {}
 var_index = prog_count
 
-for line in input_list:
-    
+def output_func(line):
+    global vars
+    global var_index
+
     #type A, error handling left
     if line[0] in op_codes_A:
         string = op_codes_A[line[0]] + '00' + (regs[line[1]] + regs[line[2]] + regs[line[3]])
@@ -162,6 +164,13 @@ for line in input_list:
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
+
+    #labels
+    if line[0][-1] == ':':
+        output_func(line[1:])
+
+for line in input_list:
+    output_func(line)
 
 
 
