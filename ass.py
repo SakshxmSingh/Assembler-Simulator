@@ -47,6 +47,17 @@ op_codes_D = {
               'st':'00101'
              }
 
+op_codes_E = {
+                'jmp' : '01111',
+                'jlt' : '11100',
+                'jgt' : '11101',
+                'je' : '11111'
+             }
+
+op_codes_F = {
+                'hlt' : '11010'
+             }
+
 regs = {
         'R0':'000',
         'R1':'001',
@@ -139,3 +150,10 @@ for line in input_list:
             string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type D"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
             f_output.write(string+"\n")
 
+
+    #type F
+    if line[0] == 'hlt':
+        #no need to test i hope
+        string = op_codes_F[line[0]] + '0'*11
+        string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16]
+        f_output.write(string + '\n')
