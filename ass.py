@@ -54,7 +54,7 @@ f_output.truncate()
 # welcome message
 f_output.write('------------\n')
 
-f_output.write("Welcome user.\nWelcome to a programme put into existence by the combined forces of users 2022434, 2022451, 2022351, 2022467.\n")
+f_output.write("Welcome user.\nWelcome to a programme put into existence by the combined forces of users 2022434, 2022451, 2022351, 2022466.\n")
 f_output.write('------------------------------------------------------------------------------------------------------------\n')
 f_output.write('The programme has taken in your commands.\n')
 f_output.write('----------------------------------------\n')
