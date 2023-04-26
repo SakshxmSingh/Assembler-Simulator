@@ -31,16 +31,21 @@ op_codes_A = {
               'and':'01100'
              }
 op_codes_B = {
-              'mov':'00011',
+              'mov':'00010',
               'rs':'01000',
               'ls':'01101',
               }
 op_codes_C = {
-              'mov':'00010',
+              'mov':'00011',
               'div':'00111',
               'not':'01001',
               'cmp':'01110'
               }
+
+op_codes_D = {
+              'ld':'00100',
+              'st':'00101'
+             }
 
 regs = {
         'R0':'000',
@@ -49,7 +54,8 @@ regs = {
         'R3':'011',
         'R4':'100',
         'R5':'101',
-        'R6':'110'
+        'R6':'110',
+        'FLAGS':'111'
         }
 
 f_input =  open("read.txt",'r+')
@@ -58,8 +64,31 @@ f_output = open("write.txt",'a+')
 f_output.seek(0)
 f_output.truncate()
 
-for line in f_input:
-    line = line.split()
+
+prog_count=0
+# prog_len=0
+
+# for line in f_input:
+#     prog_len+=1
+
+input_list = f_input.readlines()
+halt_flag = False
+for i in range(len(input_list)):
+    input_list[i] = input_list[i].split()
+    if input_list[i][0]!='var':
+        prog_count+=1
+    if (input_list[i][0]=='hlt') and i!=len(input_list)-1:
+        halt_flag = True
+        f_output.write('halt not in end\n')
+    elif input_list[i][0]=='hlt' and i==len(input_list)-1:
+        halt_flag=True
+if halt_flag==False:
+    f_output.write('halt not in program\n')
+
+vars = {}
+
+for line in input_list:
+    # line = line.split()
     
     #type A, error handling left
     if line[0] in op_codes_A:
@@ -68,11 +97,10 @@ for line in f_input:
         f_output.write(string+"\n")
 
 
-
-
-    #type B
-    elif (line[0] in op_codes_B) and ((line[2].isdigit())) : # this sorts the mov problem by checking reg or imm
-        binary = bin(int(line[2])).replace("0b", "")        
+    
+    #typeB
+    elif (line[0] in op_codes_B) and (line[2][0] == "$") : # this sorts the mov problem by checking reg or $imm
+        binary = bin(int(line[2][1:])).replace("0b", "")        
                                                     #I have ignored the case where they give negative number as input.
         if len(binary) > 7:
             string = "overflow error" + " Type B" + " " + line[0] + " "+ line[1] +" "+ line[2]
@@ -93,3 +121,21 @@ for line in f_input:
         string = op_codes_C[line[0]]+'00000'+(regs[line[1]]+regs[line[2]])
         string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type C"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
         f_output.write(string+"\n")
+
+
+    #type D, needs to be tested
+    if line[0]=='var':
+        #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
+        vars.update({line[1]:bin(prog_count)[2:]})
+        if len(vars[line[1]]) == 7:
+            pass  
+        elif len(vars[line[1]]) < 7:
+            vars[line[1]] = (7-len(vars[line[1]]))*"0"+vars[line[1]]
+        prog_count+=1
+    
+    if line[0] in op_codes_D:
+        if line[2] in vars:
+            string = op_codes_D[line[0]]+'0'+regs[line[1]]+vars[line[2]]
+            string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type D"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
+            f_output.write(string+"\n")
+
