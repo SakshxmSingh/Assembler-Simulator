@@ -83,6 +83,8 @@ if (halt_flag==False)and (len(input_list) != 0):
 vars = {}
 var_index = prog_count
 
+labels = {}
+
 for line in input_list:
     # line = line.split()
     
@@ -136,9 +138,8 @@ for line in input_list:
             f_output.write(string+"\n")
 
 
-    #type F
+    #type F, no need to test i hope
     if line[0] == 'hlt':
-        #no need to test i hope
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16]
         f_output.write(string + '\n')
