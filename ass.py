@@ -1,5 +1,7 @@
 import os
 
+# hi
+
 op_codes = {
             'add':('00000','A'),
             'sub':('00001','A'),
@@ -138,4 +140,3 @@ for line in input_list:
             string = op_codes_D[line[0]]+'0'+regs[line[1]]+vars[line[2]]
             string = string[0:4]+'_'+string[4:8]+'_'+string[8:12]+'_'+string[12:16] + " Type D"+ " "  + line[0] + " "+ line[1] +" "+ line[2]
             f_output.write(string+"\n")
-
