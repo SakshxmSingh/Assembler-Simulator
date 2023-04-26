@@ -54,12 +54,12 @@ f_output.seek(0)
 f_output.truncate()
 
 # welcome message
-f_output.write('------------\n')
+f_output.write('-------------\n')
 
 f_output.write("Welcome user.\nWelcome to a programme put into existence by the combined forces of users 2022434, 2022451, 2022351, 2022466.\n")
-f_output.write('------------------------------------------------------------------------------------------------------------\n')
+f_output.write('-------------------------------------------------------------------------------------------------------------\n')
 f_output.write('The programme has taken in your commands.\n')
-f_output.write('----------------------------------------\n')
+f_output.write('-----------------------------------------\n')
 
 prog_count=0
 
@@ -98,8 +98,10 @@ if (halt_flag == False) and (len(input_list) != 0):
 vars = {}
 var_index = prog_count
 
-for line in input_list:
-    
+def output_func(line):
+    global vars
+    global var_index
+
     #type A, error handling left
     if line[0] in op_codes_A:
         string = op_codes_A[line[0]] + '00' + (regs[line[1]] + regs[line[2]] + regs[line[3]])
@@ -163,8 +165,15 @@ for line in input_list:
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
 
+    #labels
+    if line[0][-1] == ':':
+        output_func(line[1:])
+
+for line in input_list:
+    output_func(line)
 
 
 
 
-f_output.write('-----------------------------------------------------------------------------------------------------------------------\n')
+
+f_output.write('-------------------------------------------------------------------------------------------------------------\n')
