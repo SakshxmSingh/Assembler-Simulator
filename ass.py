@@ -73,6 +73,7 @@ if halt_flag==False:
     f_output.write('halt not in program\n')
 
 vars = {}
+var_index = prog_count
 
 for line in input_list:
     # line = line.split()
@@ -113,12 +114,12 @@ for line in input_list:
     #type D, needs to be tested
     if line[0]=='var':
         #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
-        vars.update({line[1]:bin(prog_count)[2:]})
+        vars.update({line[1]:bin(var_index)[2:]})
         if len(vars[line[1]]) == 7:
             pass  
         elif len(vars[line[1]]) < 7:
             vars[line[1]] = (7-len(vars[line[1]]))*"0"+vars[line[1]]
-        prog_count+=1
+        var_index+=1
     
     if line[0] in op_codes_D:
         if line[2] in vars:
