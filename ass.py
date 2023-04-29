@@ -71,24 +71,29 @@ output_list = []  # to store all the correct lines in the initial program
 input_list = f_input.readlines()
 
 if len(input_list) == 0:
-    f_output.write(
-        'Error 256 detected: There were no instructions given. The programme has come to an end. \n')
+    assert 0 == 1, "No instructions were provided"
+elif len(input_list) > 127:
+    assert 0 == 1, "Instruction(memory) limit exceeded"
 else:
     f_output.write("The following output was generated.\n")
     f_output.write('-----------------------------------\n')
 
 halt_flag = False
-
+var_count = 0
 for i in range(len(input_list)):
-
     input_list[i] = input_list[i].split()
+
+    if len(input_list[i])==0:
+        assert 0 == 1, "General Syntax Error"
 
     if input_list[i][0][-1] == ':':
         labels.update(
             {input_list[i][0][:len(input_list[i][0]) - 1]: bin(prog_count)[2:]})
-
+    if input_list[i][0] =='var' and prog_count!=0:
+        assert 0 == 1,"Variables not declared at the beginning"
     if input_list[i][0] != 'var':
         prog_count += 1
+
 
 vars = {}
 var_index = prog_count
@@ -102,8 +107,8 @@ def label_read(line):
     if line[0] in op_codes_A:
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, "Invalid register name or some typo in register name"
-        if len(line)!=4:
-            assert 0==1, "Syntax Error"
+        if len(line) !=4:
+            assert 0 == 1, "Syntax Error"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -114,10 +119,10 @@ def label_read(line):
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
     elif (line[0] in op_codes_B) and (line[2][0] == "$"):
-        if len(line)!=3:
-            assert 0==1,"Syntax Error"
-        if line[2][1:].isdigit()==False:
-            assert 0==1,"Immediate value not valid"
+        if len(line) !=3:
+            assert 0 == 1,"Syntax Error"
+        if line[2][1:].isdigit() ==False:
+            assert 0 == 1,"Immediate value not valid"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
         if len(binary) > 7:
@@ -139,10 +144,10 @@ def label_read(line):
 
     # type C
     elif line[0] in op_codes_C:
-        if len(line)!=3:
-            assert 0==1,"Syntax Error"
+        if len(line) !=3:
+            assert 0 == 1,"Syntax Error"
         if line[1] not in regs or line[2] not in regs:
-            assert 0 == 1, "Invalid register name or some typo in register name"     
+            assert 0 == 1, "Invalid register name or some typo in register name"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
@@ -151,13 +156,13 @@ def label_read(line):
 
     # type D, needs to be tested
     elif line[0] == 'var':
-        if len(line)!=2:
-            assert 0==1,"Syntax Error"
+        if len(line) !=2:
+            assert 0 == 1,"Syntax Error"
         # need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            assert 0==1, "Variable already exists"
+            assert 0 == 1, "Variable already exists"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -166,13 +171,13 @@ def label_read(line):
         var_index += 1
 
     elif line[0] in op_codes_D:
-        if len(line)!=3:
-            assert 0==1,"Syntax Error"
+        if len(line) !=3:
+            assert 0 == 1,"Syntax Error"
         if line[2] not in vars:
             assert 0 == 1, "Variable not defined"
         elif line[2] in vars:
             if line[1] not in regs:
-                assert 0==1, "Invalid register name or some typo in register name"
+                assert 0 == 1, "Invalid register name or some typo in register name"
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
@@ -181,10 +186,10 @@ def label_read(line):
 
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
-        if len(line)!=2:
-            assert 0==1,"Syntax Error"
+        if len(line) !=2:
+            assert 0 == 1,"Syntax Error"
         if line[1] not in labels:
-            assert 0==1, "Label not defined"
+            assert 0 == 1, "Label not defined"
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
@@ -193,15 +198,16 @@ def label_read(line):
 
     # type F, no need to test i hope
     elif line[0] == 'hlt':
-        if len(line)!=1:
-            assert 0==1,"Syntax Error"
+        if len(line) !=1:
+            assert 0 == 1,"Syntax Error"
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
 
     else:
-        assert 0==1,"Invalid opcode name or some typo in opcode name"
+        assert 0 == 1,"Invalid opcode name or some typo in opcode name"
+
 
 def output_func(line):
     global vars
@@ -212,8 +218,8 @@ def output_func(line):
 
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, "Invalid register name or some typo in register name"
-        if len(line)!=4:
-            assert 0==1, "Syntax Error"
+        if len(line) !=4:
+            assert 0 == 1, "Syntax Error"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -224,10 +230,10 @@ def output_func(line):
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
     elif (line[0] in op_codes_B) and (line[2][0] == "$"):
-        if len(line)!=3:
-            assert 0==1,"Syntax Error"
-        if line[2][1:].isdigit()==False:
-            assert 0==1,"Immediate value not valid"
+        if len(line) !=3:
+            assert 0 == 1,"Syntax Error"
+        if line[2][1:].isdigit() ==False:
+            assert 0 == 1,"Immediate value not valid"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
         if len(binary) > 7:
@@ -249,8 +255,8 @@ def output_func(line):
 
     # type C
     elif line[0] in op_codes_C:
-        if len(line)!=3:
-            assert 0==1,"Syntax Error"
+        if len(line) !=3:
+            assert 0 == 1,"Syntax Error"
         if line[1] not in regs or line[2] not in regs:
             assert 0 == 1, "Invalid register name or some typo in register name"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
@@ -261,13 +267,13 @@ def output_func(line):
 
     # type D, needs to be tested
     elif line[0] == 'var':
-        if len(line)!=2:
-            assert 0==1,"Syntax Error"
+        if len(line) !=2:
+            assert 0 == 1,"Syntax Error"
         # need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            assert 0==1, "Variable already exists"
+            assert 0 == 1, "Variable already exists"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -276,13 +282,13 @@ def output_func(line):
         var_index += 1
 
     elif line[0] in op_codes_D:
-        if len(line)!=3:
-            assert 0==1,"Syntax Error"
+        if len(line) !=3:
+            assert 0 == 1,"Syntax Error"
         if line[2] not in vars:
             assert 0 == 1, "Variable not defined"
         elif line[2] in vars:
             if line[1] not in regs:
-                assert 0==1, "Invalid register name or some typo in register name"
+                assert 0 == 1, "Invalid register name or some typo in register name"
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
@@ -291,10 +297,10 @@ def output_func(line):
 
     # type E, handle the error if label was never initialised- hey handled :)
     elif line[0] in op_codes_E:
-        if len(line)!=2:
-            assert 0==1,"Syntax Error"
+        if len(line) !=2:
+            assert 0 == 1,"Syntax Error"
         if line[1] not in labels:
-            assert 0==1, "Label not defined"
+            assert 0 == 1, "Label not defined"
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
@@ -303,8 +309,8 @@ def output_func(line):
 
     # type F, no need to test i hope
     elif line[0] == 'hlt':
-        if len(line)!=1:
-            assert 0==1,"Syntax Error"
+        if len(line) !=1:
+            assert 0 == 1,"Syntax Error"
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
@@ -313,9 +319,9 @@ def output_func(line):
     # labels
     elif line[0][-1] == ':':
         label_read(line[1:])
-    
+
     else:
-        assert 0==1,"Invalid opcode name or some typo in opcode name"
+        assert 0 == 1,"Invalid opcode name or some typo in opcode name"
 
 
 # the only condition under which the program proceeds further, hlt at the end
@@ -336,4 +342,5 @@ else:
     assert halt_flag == True, "'hlt' statement is absent"
 
 
-f_output.write('-------------------------------------------------------------------------------------------------------------\n')
+f_output.write(
+    '-------------------------------------------------------------------------------------------------------------\n')
