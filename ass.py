@@ -193,6 +193,8 @@ def label_read(line):
 
     # type F, no need to test i hope
     elif line[0] == 'hlt':
+        if len(line)!=1:
+            assert 0==1,"Syntax Error"
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
@@ -301,6 +303,8 @@ def output_func(line):
 
     # type F, no need to test i hope
     elif line[0] == 'hlt':
+        if len(line)!=1:
+            assert 0==1,"Syntax Error"
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
