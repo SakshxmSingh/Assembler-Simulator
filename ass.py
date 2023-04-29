@@ -135,6 +135,8 @@ def label_read(line):
 
     #type C
     elif line[0] in op_codes_C:
+        if line[1] not in regs or line[2] not in regs:
+            assert 0==1,"Invalid register name or some typo in register name"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type C" + " " + line[0] + " " + line[1] + " " + line[2]
         f_output.write(string + "\n")
@@ -188,7 +190,7 @@ def output_func(line):
     #type B, error handling done :)
     elif (line[0] in op_codes_B) and (line[2][0] == "$") : # this sorts the mov problem by checking reg or $imm
         binary = bin(int(line[2][1:])).replace("0b", "")        
-                                                    #I have ignored the case where they give negative number as input.
+        #I have ignored the case where they give negative number as input.
         if len(binary) > 7:
             assert 0==1,"Illegal immediate values(more than 7 bits)"
             
@@ -203,9 +205,11 @@ def output_func(line):
             string = op_codes_B[line[0]] + '0'+ (regs[line[1]]) + binary
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type B" + " " + line[0] + " " + line[1] + " " + line[2]
             f_output.write(string + "\n")
-            
+
     #type C
     elif line[0] in op_codes_C:
+        if line[1] not in regs or line[2] not in regs:
+            assert 0==1,"Invalid register name or some typo in register name"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type C" + " " + line[0] + " " + line[1] + " " + line[2]
         f_output.write(string + "\n")
