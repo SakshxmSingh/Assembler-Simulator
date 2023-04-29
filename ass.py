@@ -114,7 +114,7 @@ def label_read(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
             " Type A" + " " + line[0] + " " + \
             line[1] + " " + line[2] + " " + line[3]
-        f_output.write(string + "\n")
+        output_list.append(string)
 
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
@@ -140,8 +140,7 @@ def label_read(line):
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type B" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
-            f_output.write(string + "\n")
-
+            output_list.append(string)
     # type C
     elif line[0] in op_codes_C:
         if len(line) !=3:
@@ -152,7 +151,7 @@ def label_read(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
             line[0] + " " + line[1] + " " + line[2]
-        f_output.write(string + "\n")
+        output_list.append(string)
 
     # type D, needs to be tested
     elif line[0] == 'var':
@@ -182,7 +181,7 @@ def label_read(line):
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
-            f_output.write(string + "\n")
+            output_list.append(string)
 
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
@@ -194,7 +193,7 @@ def label_read(line):
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
             '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
-        f_output.write(string + '\n')
+        output_list.append(string)
 
     # type F, no need to test i hope
     elif line[0] == 'hlt':
@@ -203,7 +202,7 @@ def label_read(line):
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
-        f_output.write(string + '\n')
+        output_list.append(string)
 
     else:
         assert 0 == 1,"Invalid opcode name or some typo in opcode name"
@@ -225,7 +224,7 @@ def output_func(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
             " Type A" + " " + line[0] + " " + \
             line[1] + " " + line[2] + " " + line[3]
-        f_output.write(string + "\n")
+        output_list.append(string)
 
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
@@ -251,7 +250,7 @@ def output_func(line):
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type B" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
-            f_output.write(string + "\n")
+            output_list.append(string)
 
     # type C
     elif line[0] in op_codes_C:
@@ -263,7 +262,7 @@ def output_func(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
             line[0] + " " + line[1] + " " + line[2]
-        f_output.write(string + "\n")
+        output_list.append(string)
 
     # type D, needs to be tested
     elif line[0] == 'var':
@@ -293,7 +292,7 @@ def output_func(line):
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
-            f_output.write(string + "\n")
+            output_list.append(string)
 
     # type E, handle the error if label was never initialised- hey handled :)
     elif line[0] in op_codes_E:
@@ -305,7 +304,7 @@ def output_func(line):
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
             '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
-        f_output.write(string + '\n')
+        output_list.append(string)
 
     # type F, no need to test i hope
     elif line[0] == 'hlt':
@@ -314,7 +313,7 @@ def output_func(line):
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
-        f_output.write(string + '\n')
+        output_list.append(string)
 
     # labels
     elif line[0][-1] == ':':
@@ -341,6 +340,6 @@ else:
     # put a suitable error in here
     assert halt_flag == True, "'hlt' statement is absent"
 
-
-f_output.write(
-    '-------------------------------------------------------------------------------------------------------------\n')
+for i in output_list:
+    f_output.write(i+'\n')
+f_output.write('-------------------------------------------------------------------------------------------------------------\n')
