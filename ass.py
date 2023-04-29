@@ -114,6 +114,10 @@ def label_read(line):
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
     elif (line[0] in op_codes_B) and (line[2][0] == "$"):
+        if len(line)!=3:
+            assert 0==1,"Syntax Error"
+        if line[2][1:].isdigit()==False:
+            assert 0==1,"Immediate value not valid"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
         if len(binary) > 7:
@@ -135,8 +139,10 @@ def label_read(line):
 
     # type C
     elif line[0] in op_codes_C:
+        if len(line)!=3:
+            assert 0==1,"Syntax Error"
         if line[1] not in regs or line[2] not in regs:
-            assert 0 == 1, "Invalid register name or some typo in register name"
+            assert 0 == 1, "Invalid register name or some typo in register name"     
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
@@ -145,8 +151,13 @@ def label_read(line):
 
     # type D, needs to be tested
     elif line[0] == 'var':
+        if len(line)!=2:
+            assert 0==1,"Syntax Error"
         # need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
-        vars.update({line[1]: bin(var_index)[2:]})
+        if (line[1] not in vars):
+            vars.update({line[1]: bin(var_index)[2:]})
+        else:
+            assert 0==1, "Variable already exists"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -155,6 +166,8 @@ def label_read(line):
         var_index += 1
 
     elif line[0] in op_codes_D:
+        if len(line)!=3:
+            assert 0==1,"Syntax Error"
         if line[2] not in vars:
             assert 0 == 1, "Variable not defined"
         elif line[2] in vars:
@@ -168,6 +181,8 @@ def label_read(line):
 
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
+        if len(line)!=2:
+            assert 0==1,"Syntax Error"
         if line[1] not in labels:
             assert 0==1, "Label not defined"
         mem_addr = labels[line[1]]
@@ -207,6 +222,10 @@ def output_func(line):
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
     elif (line[0] in op_codes_B) and (line[2][0] == "$"):
+        if len(line)!=3:
+            assert 0==1,"Syntax Error"
+        if line[2][1:].isdigit()==False:
+            assert 0==1,"Immediate value not valid"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
         if len(binary) > 7:
@@ -228,6 +247,8 @@ def output_func(line):
 
     # type C
     elif line[0] in op_codes_C:
+        if len(line)!=3:
+            assert 0==1,"Syntax Error"
         if line[1] not in regs or line[2] not in regs:
             assert 0 == 1, "Invalid register name or some typo in register name"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
@@ -238,8 +259,13 @@ def output_func(line):
 
     # type D, needs to be tested
     elif line[0] == 'var':
+        if len(line)!=2:
+            assert 0==1,"Syntax Error"
         # need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
-        vars.update({line[1]: bin(var_index)[2:]})
+        if (line[1] not in vars):
+            vars.update({line[1]: bin(var_index)[2:]})
+        else:
+            assert 0==1, "Variable already exists"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -248,6 +274,8 @@ def output_func(line):
         var_index += 1
 
     elif line[0] in op_codes_D:
+        if len(line)!=3:
+            assert 0==1,"Syntax Error"
         if line[2] not in vars:
             assert 0 == 1, "Variable not defined"
         elif line[2] in vars:
@@ -261,6 +289,8 @@ def output_func(line):
 
     # type E, handle the error if label was never initialised- hey handled :)
     elif line[0] in op_codes_E:
+        if len(line)!=2:
+            assert 0==1,"Syntax Error"
         if line[1] not in labels:
             assert 0==1, "Label not defined"
         mem_addr = labels[line[1]]
@@ -302,5 +332,4 @@ else:
     assert halt_flag == True, "'hlt' statement is absent"
 
 
-f_output.write(
-    '-------------------------------------------------------------------------------------------------------------\n')
+f_output.write('-------------------------------------------------------------------------------------------------------------\n')
