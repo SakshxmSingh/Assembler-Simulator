@@ -167,7 +167,7 @@ def output_func(line):
 
     # if none of the opcodes match
     else:
-        print(f'Syntax Error in the opcode for line {line}\n')
+        assert 0==1,f'Syntax Error in the opcode for line {line}\n'
         
     #labels
     if line[0][-1] == ':':
