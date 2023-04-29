@@ -192,6 +192,8 @@ def label_read(line):
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
 
+    else:
+        assert 0==1,"Invalid opcode name or some typo in opcode name"
 
 def output_func(line):
     global vars
@@ -284,6 +286,9 @@ def output_func(line):
     # labels
     elif line[0][-1] == ':':
         label_read(line[1:])
+    
+    else:
+        assert 0==1,"Invalid opcode name or some typo in opcode name"
 
 
 # the only condition under which the program proceeds further, hlt at the end
