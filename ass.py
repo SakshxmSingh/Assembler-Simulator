@@ -135,7 +135,7 @@ def output_func(line):
 
 
     #type D, needs to be tested
-    if line[0] == 'var':
+    elif line[0] == 'var':
         #need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         vars.update({line[1]:bin(var_index)[2:]})
         if len(vars[line[1]]) == 7:
@@ -144,7 +144,7 @@ def output_func(line):
             vars[line[1]] = (7 - len(vars[line[1]]))*"0" + vars[line[1]]
         var_index += 1
     
-    if line[0] in op_codes_D:
+    elif line[0] in op_codes_D:
         if line[2] in vars:
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type D" + " " + line[0] + " " + line[1] + " " + line[2]
@@ -152,7 +152,7 @@ def output_func(line):
 
 
     #type E, handle the error if label was never initialised
-    if line[0] in op_codes_E:
+    elif line[0] in op_codes_E:
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
@@ -160,10 +160,11 @@ def output_func(line):
 
 
     #type F, no need to test i hope
-    if line[0] == 'hlt':
+    elif line[0] == 'hlt':
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
+
 
     #labels
     if line[0][-1] == ':':
