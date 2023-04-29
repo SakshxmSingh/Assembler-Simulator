@@ -165,7 +165,10 @@ def output_func(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
 
-
+    # if none of the opcodes match
+    else:
+        print(f'Syntax Error in the opcode for line {line}\n')
+        
     #labels
     if line[0][-1] == ':':
         output_func(line[1:])
