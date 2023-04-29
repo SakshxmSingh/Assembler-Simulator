@@ -89,17 +89,6 @@ for i in range(len(input_list)):
 
     if input_list[i][0] != 'var':
         prog_count += 1
-    # needs to be checked with suitable testcases, both asserts
-#     if (input_list[i][0] == 'hlt') and i != len(input_list)-1:
-#         assert halt_flag==True, "halt statement not at the end"
-
-#     elif input_list[i][0] == 'hlt' and i == len(input_list)-1:
-#         halt_flag = True
-
-#     assert halt_flag==True,"Halt statement is not present"
-
-# if (halt_flag == False) and (len(input_list) != 0):
-#     f_output.write('halt not in program\n')
 
 vars = {}
 var_index = prog_count
@@ -113,6 +102,8 @@ def label_read(line):
     if line[0] in op_codes_A:
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, "Invalid register name or some typo in register name"
+        if len(line)!=4:
+            assert 0==1, "Syntax Error"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -204,6 +195,8 @@ def output_func(line):
 
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, "Invalid register name or some typo in register name"
+        if len(line)!=4:
+            assert 0==1, "Syntax Error"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
