@@ -65,6 +65,7 @@ prog_count=0
 
 labels={}
 
+output_list=[]  #to store all the correct lines in the initial program
 input_list = f_input.readlines()
 
 if len(input_list) == 0:
@@ -84,16 +85,17 @@ for i in range(len(input_list)):
     
     if input_list[i][0] != 'var':
         prog_count += 1
-    
-    if (input_list[i][0] == 'hlt') and i != len(input_list)-1:
-        halt_flag = True
-        f_output.write('halt not in end\n')
-    elif input_list[i][0] == 'hlt' and i == len(input_list)-1:
-        halt_flag = True
-    
+    # needs to be checked with suitable testcases, both asserts
+#     if (input_list[i][0] == 'hlt') and i != len(input_list)-1:
+#         assert halt_flag==True, "halt statement not at the end"
 
-if (halt_flag == False) and (len(input_list) != 0):
-    f_output.write('halt not in program\n')
+#     elif input_list[i][0] == 'hlt' and i == len(input_list)-1:
+#         halt_flag = True
+    
+#     assert halt_flag==True,"Halt statement is not present"
+
+# if (halt_flag == False) and (len(input_list) != 0):
+#     f_output.write('halt not in program\n')
 
 vars = {}
 var_index = prog_count
@@ -165,16 +167,28 @@ def output_func(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
         f_output.write(string + '\n')
 
+    #labels
+    elif line[0][-1] == ':':
+        output_func(line[1:])
+
     # if none of the opcodes match
     else:
         assert 0==1,f'Syntax Error in the opcode for line {line}\n'
-        
-    #labels
-    if line[0][-1] == ':':
-        output_func(line[1:])
+       
 
-for line in input_list:
-    output_func(line)
+if 'hlt' in input_list[len(input_list)-1]:#the only condition under which the program proceeds further, hlt at the end
+        halt_flag=True
+else:
+    for i in range(len(input_list)-1):
+        if 'hlt' in input_list[i]:
+            assert halt_flag==True,"'hlt' not being used as the last instruction"#throws off execution of the program, hlt not at the end
+
+
+if halt_flag:
+    for line in input_list:
+        output_func(line)
+else:
+    assert halt_flag==True,"something something"#put a suitable error in here
 
 
 
