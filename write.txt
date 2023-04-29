@@ -9,4 +9,3 @@ The following output was generated.
 0001_0000_1111_1111 Type B mov R1 $127
 0001_0001_0110_0100 Type B mov R2 $100
 0011_0000_1101_0001 Type A mul R3 R2 R1
-0010_1001_1000_0110 Type D st R3 X
