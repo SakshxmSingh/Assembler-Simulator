@@ -2,6 +2,6 @@
 Computer Organisation group project, Assembly Simulator
 
 
-a few commits, yet still no commitments
+a lot of commits, but never no commitments
 
 Current lead branch -- main
