@@ -177,6 +177,8 @@ def label_read(line):
 
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
+        if line[1] not in labels:
+            assert 0==1, "Label not defined"
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
@@ -262,8 +264,10 @@ def output_func(line):
                 line[0] + " " + line[1] + " " + line[2]
             f_output.write(string + "\n")
 
-    # type E, handle the error if label was never initialised
+    # type E, handle the error if label was never initialised- hey handled :)
     elif line[0] in op_codes_E:
+        if line[1] not in labels:
+            assert 0==1, "Label not defined"
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
