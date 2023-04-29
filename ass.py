@@ -171,7 +171,7 @@ def output_func(line):
     global vars
     global var_index
 
-    #type A, register error handliing done
+    #type A, register error handling done
     if line[0] in op_codes_A:
 
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
