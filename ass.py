@@ -171,8 +171,11 @@ def output_func(line):
     global vars
     global var_index
 
-    #type A, error handling left
+    #type A, register error handliing done
     if line[0] in op_codes_A:
+
+        if line[1] not in regs or line[2] not in regs or line[3] not in regs:
+            assert 0==1, "Invalid register name or some typo in register name"
         string = op_codes_A[line[0]] + '00' + (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + " Type A" + " " + line[0] + " " + line[1] + " " + line[2] + " " + line[3]
         f_output.write(string + "\n")
