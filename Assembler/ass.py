@@ -47,8 +47,8 @@ regs = {
     'FLAGS': '111'
 }
 
-f_input = open("read.txt", 'r+')
-f_output = open("write.txt", 'a+')
+f_input = open("Assembler/read.txt", 'r+')
+f_output = open("Assembler/write.txt", 'a+')
 
 f_output.seek(0)
 f_output.truncate()
