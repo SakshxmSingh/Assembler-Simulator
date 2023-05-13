@@ -1,41 +1,4 @@
 var x
 var y
-var z
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
-add R1 R2 R3
+var x
 hlt
