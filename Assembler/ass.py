@@ -105,7 +105,9 @@ def label_read(line):
 
     # type A, error handling done :)
     if line[0] in op_codes_A:
-        if line[1] not in regs or line[2] not in regs or line[3] not in regs:
+        if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
+            assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
+        elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
         if len(line) !=4:
             assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
@@ -216,6 +218,8 @@ def output_func(line):
     # type A, register error handling
     if line[0] in op_codes_A:
 
+        if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
+            assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
         if len(line) !=4:
