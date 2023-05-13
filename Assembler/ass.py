@@ -93,8 +93,9 @@ for i in range(len(input_list)):
             {input_list[i][0][:len(input_list[i][0]) - 1]: bin(prog_count)[2:]})
     if input_list[i][0] =='var' and prog_count!=0:
         assert 0 == 1, f"Variables not declared / declared incorrectly at the beginning (line {i+1})"
-    if input_list[i][0] != 'var':
-        prog_count += 1
+    if len(input_list[i]) != 0:
+        if input_list[i][0] != 'var':
+            prog_count += 1
 
 
 vars = {}

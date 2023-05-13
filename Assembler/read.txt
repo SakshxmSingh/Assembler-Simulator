@@ -1,2 +1,4 @@
-hlt
+var x
+var y
+var x
 hlt

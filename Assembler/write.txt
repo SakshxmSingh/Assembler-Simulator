@@ -6,4 +6,4 @@ The programme has taken in your commands.
 -----------------------------------------
 The following output was generated.
 -----------------------------------
-'hlt' not being used as the last instruction
+Variable already exists. (line1)
