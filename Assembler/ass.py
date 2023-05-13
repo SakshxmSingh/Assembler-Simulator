@@ -109,8 +109,10 @@ def label_read(line):
             assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
         elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
-        if len(line) !=4:
-            assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 4:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 4:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -123,9 +125,9 @@ def label_read(line):
     elif (line[0] in op_codes_B):
         
         if len(line) > 3:
-            assert 0 == 1, f"Syntax Error: More inputs than assembler can handle.  (line {input_list.index(line)+1})"
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
-            assert 0 == 1, f"Syntax Error: less inputs than what assembler needs. (line {input_list.index(line)+1})"
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if (line[2][0] != "$" ) and (line[2][1:].isdigit()):
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
         if line[2][1:].isdigit() == False:
@@ -151,8 +153,10 @@ def label_read(line):
 
     # type C
     elif line[0] in op_codes_C:
-        if len(line) !=3:
-            assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 3:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in regs or line[2] not in regs:
             assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
@@ -178,8 +182,10 @@ def label_read(line):
         var_index += 1
 
     elif line[0] in op_codes_D:
-        if len(line) !=3:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 3:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[2] not in vars:
             assert 0 == 1, f"Variable not defined (line {input_list.index(line)+1})"
         elif line[2] in vars:
@@ -193,8 +199,10 @@ def label_read(line):
 
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
-        if len(line) !=2:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 2:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 2:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in labels:
             assert 0 == 1, f"Label not defined (line {input_list.index(line)+1})"
         mem_addr = labels[line[1]]
@@ -227,8 +235,10 @@ def output_func(line):
             assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
         if line[1] not in regs or line[2] not in regs or line[3] not in regs:
             assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
-        if len(line) !=4:
-            assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 4:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 4:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -241,9 +251,9 @@ def output_func(line):
     elif (line[0] in op_codes_B):
 
         if len(line) > 3:
-            assert 0 == 1, f"Syntax Error: More inputs than assembler can handle.  (line {input_list.index(line)+1})"
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
-            assert 0 == 1, f"Syntax Error: less inputs than what assembler needs. (line {input_list.index(line)+1})"
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if (line[2][0] != "$" ) and (line[2][1:].isdigit()):
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
         if line[2][1:].isdigit() ==False:
@@ -269,8 +279,10 @@ def output_func(line):
 
     # type C
     elif line[0] in op_codes_C:
-        if len(line) !=3:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 3:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in regs or line[2] not in regs:
             assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
@@ -296,8 +308,10 @@ def output_func(line):
         var_index += 1
 
     elif line[0] in op_codes_D:
-        if len(line) !=3:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 3:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[2] not in vars:
             assert 0 == 1, f"Variable not defined (line {input_list.index(line)+1})"
         elif line[2] in vars:
@@ -311,8 +325,10 @@ def output_func(line):
 
     # type E, handle the error if label was never initialised- hey handled :)
     elif line[0] in op_codes_E:
-        if len(line) !=2:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+        if len(line) > 2:
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 2:
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in labels:
             assert 0 == 1, f"Label not defined (line {input_list.index(line)+1})"
         mem_addr = labels[line[1]]
