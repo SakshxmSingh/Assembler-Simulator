@@ -1,2 +1,2 @@
-add $100
+ls R1 $10d
 hlt

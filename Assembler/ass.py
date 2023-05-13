@@ -120,10 +120,15 @@ def label_read(line):
 
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
-    elif (line[0] in op_codes_B) and (line[2][0] == "$"):
-        if len(line) !=3:
-            assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
-        if line[2][1:].isdigit() ==False:
+    elif (line[0] in op_codes_B):
+        
+        if len(line) > 3:
+            assert 0 == 1, f"Syntax Error: More inputs than assembler can handle.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            assert 0 == 1, f"Syntax Error: less inputs than what assembler needs. (line {input_list.index(line)+1})"
+        if (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+            assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
+        if line[2][1:].isdigit() == False:
             assert 0 == 1, f"Immediate value not valid (line {input_list.index(line)+1})"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
@@ -233,9 +238,14 @@ def output_func(line):
 
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
-    elif (line[0] in op_codes_B) and (line[2][0] == "$"):
-        if len(line) !=3:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+    elif (line[0] in op_codes_B):
+
+        if len(line) > 3:
+            assert 0 == 1, f"Syntax Error: More inputs than assembler can handle.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            assert 0 == 1, f"Syntax Error: less inputs than what assembler needs. (line {input_list.index(line)+1})"
+        if (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+            assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
         if line[2][1:].isdigit() ==False:
             assert 0 == 1,f"Immediate value not valid (line {input_list.index(line)+1})"
         binary = bin(int(line[2][1:])).replace("0b", "")
