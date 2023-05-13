@@ -223,11 +223,14 @@ def label_read(line):
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
         if len(line) > 2:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode. (line {input_list.index(line)+1})"
         if len(line) < 2:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in labels:
-            assert 0 == 1, f"Label not defined (line {input_list.index(line)+1})"
+            f_output.write("Label not defined (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Label not defined. (line {input_list.index(line)+1})"
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
@@ -237,6 +240,7 @@ def label_read(line):
     # type F, no need to test i hope
     elif line[0] == 'hlt':
         if len(line) !=1:
+            f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
@@ -244,7 +248,8 @@ def label_read(line):
         output_list.append(string)
 
     else:
-        assert 0 == 1,f"Invalid opcode name or some typo in opcode name (line {input_list.index(line)+1})"
+        f_output.write("Invalid opcode name or some typo in opcode name. (line"+ str(input_list.index(line)+1)+ ")")
+        assert 0 == 1,f"Invalid opcode name or some typo in opcode name. (line {input_list.index(line)+1})"
 
 
 def output_func(line):
@@ -368,11 +373,14 @@ def output_func(line):
     # type E, handle the error if label was never initialised- hey handled :)
     elif line[0] in op_codes_E:
         if len(line) > 2:
-            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode. (line {input_list.index(line)+1})"
         if len(line) < 2:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in labels:
-            assert 0 == 1, f"Label not defined (line {input_list.index(line)+1})"
+            f_output.write("Label not defined (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Label not defined. (line {input_list.index(line)+1})"
         mem_addr = labels[line[1]]
         string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
@@ -382,7 +390,8 @@ def output_func(line):
     # type F, no need to test i hope
     elif line[0] == 'hlt':
         if len(line) !=1:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+            f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1,f"Syntax Error. (line {input_list.index(line)+1})"
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + \
             string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
@@ -393,6 +402,7 @@ def output_func(line):
         label_read(line[1:])
 
     else:
+        f_output.write("Invalid opcode name or some typo in opcode name. (line"+ str(input_list.index(line)+1)+ ")")
         assert 0 == 1,f"Invalid opcode name or some typo in opcode name (line {input_list.index(line)+1})"
 
 
