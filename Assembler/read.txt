@@ -1,7 +1,9 @@
-label:   mov R1 $5
-    mov R2 $5
-    add R1 R2 R1
-    cmp R1 R2
-    sub R1 R1 R2
-    je End
-end: hlt
+var var1
+var var2
+var var3
+hlt_label: hlt
+ld R1 var1
+ld R2 var2
+st R3 var3
+rs R3 $2
+hlt_label: hlt
