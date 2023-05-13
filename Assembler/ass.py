@@ -411,7 +411,8 @@ def output_func(line):
 for i in range(len(input_list)-1):
     if 'hlt' in input_list[i]:
         # throws off execution of the program, hlt not at the end
-        assert halt_flag == True, "'hlt' not being used as the last instruction"
+        f_output.write("'hlt' not being used as the last instruction.")
+        assert halt_flag == True, "'hlt' not being used as the last instruction."
 
 if 'hlt' in input_list[len(input_list)-1]:
     halt_flag = True
@@ -424,7 +425,8 @@ if halt_flag:
             output_func(line)
 else:
     # put a suitable error in here
-    assert halt_flag == True, "'hlt' statement is absent"
+    f_output.write("'hlt' statement is absent.")
+    assert halt_flag == True, "'hlt' statement is absent."
 
 for i in output_list:
     f_output.write(i+'\n')
