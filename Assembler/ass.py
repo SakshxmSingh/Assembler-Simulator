@@ -83,14 +83,14 @@ var_count = 0
 for i in range(len(input_list)):
     input_list[i] = input_list[i].split()
 
-    if len(input_list[i])==0:
-        assert 0 == 1, f"General Syntax Error (Empty line) (line {i+1})"
+    if len(input_list[i]) == 0:   #ignore empty lines
+        continue
 
     if input_list[i][0][-1] == ':':
         labels.update(
             {input_list[i][0][:len(input_list[i][0]) - 1]: bin(prog_count)[2:]})
     if input_list[i][0] =='var' and prog_count!=0:
-        assert 0 == 1, f"Variables not declared at the beginning (line {i+1})"
+        assert 0 == 1, f"Variables not declared / declared incorrectly at the beginning (line {i+1})"
     if input_list[i][0] != 'var':
         prog_count += 1
 
@@ -350,7 +350,10 @@ if 'hlt' in input_list[len(input_list)-1]:
 
 if halt_flag:
     for line in input_list:
-        output_func(line)
+        if line == []:  #handling empty line
+            pass    
+        else:
+            output_func(line)
 else:
     # put a suitable error in here
     assert halt_flag == True, "'hlt' statement is absent"
