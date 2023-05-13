@@ -6,6 +6,41 @@ The programme has taken in your commands.
 -----------------------------------------
 The following output was generated.
 -----------------------------------
-0001_1000_0000_1010 Type C mov R1 R2
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
+0000_0000_0101_0011 Type A add R1 R2 R3
 1101_0000_0000_0000 Type F hlt
 -------------------------------------------------------------------------------------------------------------

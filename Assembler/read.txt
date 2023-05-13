@@ -1,2 +1,41 @@
-mov R1 R2
+var x
+var y
+var z
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
+add R1 R2 R3
 hlt

@@ -185,12 +185,14 @@ def label_read(line):
     # below is variable allotment
     elif line[0] == 'var':
         if len(line) !=2:
-            assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
+            f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error. (line {input_list.index(line)+1})"
         # need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            assert 0 == 1, f"Variable already exists (line {input_list.index(line)+1})"
+            f_output.write("Variable already exists. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Variable already exists. (line {input_list.index(line)+1})"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -200,14 +202,18 @@ def label_read(line):
 
     elif line[0] in op_codes_D:
         if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[2] not in vars:
-            assert 0 == 1, f"Variable not defined (line {input_list.index(line)+1})"
+            f_output.write("Variable not defined. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Variable not defined. (line {input_list.index(line)+1})"
         elif line[2] in vars:
             if line[1] not in regs:
-                assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+                f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
@@ -324,12 +330,14 @@ def output_func(line):
     # type D, needs to be tested
     elif line[0] == 'var':
         if len(line) !=2:
-            assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
+            f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error. (line {input_list.index(line)+1})"
         # need to convert the entire input into a 2d list, tabhi vars can be indexed and accessed easily
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            assert 0 == 1, f"Variable already exists (line {input_list.index(line)+1})"
+            f_output.write("Variable already exists. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Variable already exists. (line {input_list.index(line)+1})"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -339,14 +347,18 @@ def output_func(line):
 
     elif line[0] in op_codes_D:
         if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[2] not in vars:
-            assert 0 == 1, f"Variable not defined (line {input_list.index(line)+1})"
+            f_output.write("Variable not defined. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Variable not defined. (line {input_list.index(line)+1})"
         elif line[2] in vars:
             if line[1] not in regs:
-                assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+                f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
