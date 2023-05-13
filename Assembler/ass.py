@@ -179,6 +179,7 @@ def label_read(line):
         output_list.append(string)
 
     # type D, needs to be tested
+    # below is variable allotment
     elif line[0] == 'var':
         if len(line) !=2:
             assert 0 == 1, f"Syntax Error (line {input_list.index(line)+1})"
