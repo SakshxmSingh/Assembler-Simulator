@@ -71,8 +71,10 @@ output_list = []  # to store all the correct lines in the initial program
 input_list = f_input.readlines()
 
 if len(input_list) == 0:
+    f_output.write("No instructions were provided")
     assert 0 == 1, "No instructions were provided"
 elif len(input_list) > 127:
+    f_output.write("Instruction(memory) limit exceeded")
     assert 0 == 1, "Instruction(memory) limit exceeded"
 else:
     f_output.write("The following output was generated.\n")
@@ -104,17 +106,20 @@ def label_read(line):
     global var_index
 
     # type A, error handling done :)
-    if line[0] in op_codes_A:
-        
+    if line[0] in op_codes_A:        
         
         if len(line) > 4:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 4:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
+            f_output.write("This assembler does not support operations on immediate values directly. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
         elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
-            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+            f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -202,7 +207,7 @@ def label_read(line):
     # type E, handle the error if label was never initialised
     elif line[0] in op_codes_E:
         if len(line) > 2:
-            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode. (line {input_list.index(line)+1})"
         if len(line) < 2:
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in labels:
@@ -234,13 +239,17 @@ def output_func(line):
     if line[0] in op_codes_A:        
         
         if len(line) > 4:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 4:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
+            f_output.write("This assembler does not support operations on immediate values directly. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
         elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
-            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+            f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \

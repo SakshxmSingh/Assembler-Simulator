@@ -6,3 +6,4 @@ The programme has taken in your commands.
 -----------------------------------------
 The following output was generated.
 -----------------------------------
+Invalid register name or some typo in register name. (line2)
