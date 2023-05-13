@@ -132,17 +132,22 @@ def label_read(line):
     elif (line[0] in op_codes_B) and (line[2][0] == "$") :
         
         if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+            f_output.write("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
-        if line[2][1:].isdigit() == False:
-            assert 0 == 1, f"Immediate value not valid (line {input_list.index(line)+1})"
+        if line[2][1:].isdigit() ==False:
+            f_output.write("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
         if len(binary) > 7:
-            assert 0 == 1, f"Illegal immediate values(more than 7 bits) (line {input_list.index(line)+1})"
+            f_output.write("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
 
         else:
             if len(binary) == 7:
@@ -151,7 +156,8 @@ def label_read(line):
                 binary = (7 - len(binary))*"0" + binary
 
             if line[1] not in regs:
-                assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+                f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
             string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type B" + " " + \
@@ -262,17 +268,22 @@ def output_func(line):
     elif (line[0] in op_codes_B) and (line[2][0] == "$") :
 
         if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+            f_output.write("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
         if line[2][1:].isdigit() ==False:
-            assert 0 == 1,f"Immediate value not valid (line {input_list.index(line)+1})"
+            f_output.write("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
         binary = bin(int(line[2][1:])).replace("0b", "")
         # I have ignored the case where they give negative number as input.
         if len(binary) > 7:
-            assert 0 == 1, f"Illegal immediate values(more than 7 bits) (line {input_list.index(line)+1})"
+            f_output.write("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
 
         else:
             if len(binary) == 7:
@@ -281,7 +292,8 @@ def output_func(line):
                 binary = (7 - len(binary))*"0" + binary
 
             if line[1] not in regs:
-                assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+                f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
             string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type B" + " " + \
