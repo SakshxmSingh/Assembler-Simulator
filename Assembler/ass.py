@@ -105,14 +105,16 @@ def label_read(line):
 
     # type A, error handling done :)
     if line[0] in op_codes_A:
-        if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
-            assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
-        elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
-            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+        
+        
         if len(line) > 4:
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 4:
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
+        if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
+            assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
+        elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
+            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -122,13 +124,13 @@ def label_read(line):
 
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
-    elif (line[0] in op_codes_B):
+    elif (line[0] in op_codes_B) and (line[2][0] == "$") :
         
         if len(line) > 3:
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
-        if (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+        elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
         if line[2][1:].isdigit() == False:
             assert 0 == 1, f"Immediate value not valid (line {input_list.index(line)+1})"
@@ -229,16 +231,16 @@ def output_func(line):
     global var_index
 
     # type A, register error handling
-    if line[0] in op_codes_A:
-
-        if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
-            assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
-        if line[1] not in regs or line[2] not in regs or line[3] not in regs:
-            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+    if line[0] in op_codes_A:        
+        
         if len(line) > 4:
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 4:
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
+        if (line[1][0] == "$") or (line[2][0] == "$") or (line[3][0] == "$"):
+            assert 0 == 1, f"This assembler does not support operations on immediate values directly. (line {input_list.index(line)+1})"
+        elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
+            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -248,13 +250,13 @@ def output_func(line):
 
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
-    elif (line[0] in op_codes_B):
+    elif (line[0] in op_codes_B) and (line[2][0] == "$") :
 
         if len(line) > 3:
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
-        if (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+        elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
         if line[2][1:].isdigit() ==False:
             assert 0 == 1,f"Immediate value not valid (line {input_list.index(line)+1})"

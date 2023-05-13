@@ -1,2 +1,5 @@
-ls R3 $30 $56
+var hjk
+var abc
+var xyz
 hlt
+add R1 R2 R3
