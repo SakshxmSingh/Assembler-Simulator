@@ -167,11 +167,14 @@ def label_read(line):
     # type C
     elif line[0] in op_codes_C:
         if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode.(line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in regs or line[2] not in regs:
-            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+            f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
@@ -304,11 +307,14 @@ def output_func(line):
     # type C
     elif line[0] in op_codes_C:
         if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode.(line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
         if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
         if line[1] not in regs or line[2] not in regs:
-            assert 0 == 1, f"Invalid register name or some typo in register name (line {input_list.index(line)+1})"
+            f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
