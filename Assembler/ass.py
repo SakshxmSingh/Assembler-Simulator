@@ -326,7 +326,7 @@ def output_func(line):
 
 # the only condition under which the program proceeds further, hlt at the end
 
-for i in range(len(input_list)-2):
+for i in range(len(input_list)-1):
     if 'hlt' in input_list[i]:
         # throws off execution of the program, hlt not at the end
         assert halt_flag == True, "'hlt' not being used as the last instruction"
