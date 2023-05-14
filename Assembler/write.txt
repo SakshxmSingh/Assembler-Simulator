@@ -22,6 +22,4 @@ The programme has taken in your commands.
 -----------------------------------------
 The following output was generated.
 -----------------------------------
-0000_0000_0100_1001 Type A add R1 R1 R1
-1101_0000_0000_0000 Type F hlt
--------------------------------------------------------------------------------------------------------------
+'hlt' not being used as the last instruction
