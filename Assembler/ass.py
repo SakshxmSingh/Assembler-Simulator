@@ -105,10 +105,10 @@ var_count = 0
 for i in range(len(input_list)):
     input_list[i] = input_list[i].split()
 
-    if len(input_list[i]) == 0:   #ignore empty lines
+    if len(input_list[i]) == 0:   # ignore empty lines
         continue
 
-    if input_list[i][0][-1] == ':':
+    if input_list[i][0][-1] == ':':     # labels
         labels.update(
             {input_list[i][0][:len(input_list[i][0]) - 1]: bin(prog_count)[2:]})
     if input_list[i][0] =='var' and prog_count!=0:
@@ -117,15 +117,18 @@ for i in range(len(input_list)):
         if input_list[i][0] != 'var':
             prog_count += 1
 
-
 vars = {}
 var_index = prog_count
+output_prog_count = 0
 
 
 def label_read(line):
     global vars
     global var_index
+    global input_list
+    global output_prog_count
 
+    output_prog_count += 1
     # type A, error handling done :)
     if line[0] in op_codes_A:        
         
@@ -141,6 +144,9 @@ def label_read(line):
         elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
             f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+        elif line[1] == "FLAGS" or line[2] == "FLAGS" or line[3] == "FLAGS":
+            f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -179,13 +185,16 @@ def label_read(line):
             if line[1] not in regs:
                 f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+            elif line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
             string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type B" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
 
-    # type C
+    # type C, errors handled
     elif line[0] in op_codes_C:
         if len(line) > 3:
             f_output.write("Syntax Error: You have entered in more inputs than required for this opcode.(line"+ str(input_list.index(line)+1)+ ")")
@@ -196,13 +205,20 @@ def label_read(line):
         if line[1] not in regs or line[2] not in regs:
             f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+        elif line[0] == 'mov':
+            if line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+        elif line[0] != 'mov':
+            if line[1] == "FLAGS" or line[2] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})" 
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
             line[0] + " " + line[1] + " " + line[2]
         output_list.append(string)
 
-    # type D, needs to be tested
     # below is variable allotment
     elif line[0] == 'var':
         if len(line) !=2:
@@ -212,8 +228,8 @@ def label_read(line):
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            f_output.write("Variable already exists. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Variable already exists. (line {input_list.index(line)+1})"
+            f_output.write("Variable already exists. (line"+ str(output_prog_count)+ ")")
+            assert 0 == 1, f"Variable already exists. (line {output_prog_count})"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -221,6 +237,7 @@ def label_read(line):
             vars[line[1]] = (7 - len(vars[line[1]]))*"0" + vars[line[1]]
         var_index += 1
 
+    # type D, errors handled
     elif line[0] in op_codes_D:
         if len(line) > 3:
             f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
@@ -235,13 +252,16 @@ def label_read(line):
             if line[1] not in regs:
                 f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+            elif line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
 
-    # type E, handle the error if label was never initialised
+    # type E, errors handled
     elif line[0] in op_codes_E:
         if len(line) > 2:
             f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
@@ -258,7 +278,7 @@ def label_read(line):
             '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
         output_list.append(string)
 
-    # type F, no need to test i hope
+    # type F, errors handled
     elif line[0] == 'hlt':
         if len(line) !=1:
             f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
@@ -276,7 +296,10 @@ def label_read(line):
 def output_func(line):
     global vars
     global var_index
+    global input_list
+    global output_prog_count
 
+    output_prog_count += 1
     # type A, register error handling
     if line[0] in op_codes_A:        
         
@@ -292,6 +315,9 @@ def output_func(line):
         elif line[1] not in regs or line[2] not in regs or line[3] not in regs:
             f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+        elif line[1] == "FLAGS" or line[2] == "FLAGS" or line[3] == "FLAGS":
+            f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
         string = op_codes_A[line[0]] + '00' + \
             (regs[line[1]] + regs[line[2]] + regs[line[3]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
@@ -330,13 +356,16 @@ def output_func(line):
             if line[1] not in regs:
                 f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+            elif line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
             string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type B" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
 
-    # type C
+    # type C, errors handled
     elif line[0] in op_codes_C:
         if len(line) > 3:
             f_output.write("Syntax Error: You have entered in more inputs than required for this opcode.(line"+ str(input_list.index(line)+1)+ ")")
@@ -347,13 +376,21 @@ def output_func(line):
         if line[1] not in regs or line[2] not in regs:
             f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+        elif line[0] == 'mov':
+            if line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+        elif line[0] != 'mov':
+            if line[1] == "FLAGS" or line[2] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})" 
         string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
             string[12:16] + " Type C" + " " + \
             line[0] + " " + line[1] + " " + line[2]
         output_list.append(string)
 
-    # type D, needs to be tested
+    # variable allotment
     elif line[0] == 'var':
         if len(line) !=2:
             f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
@@ -362,8 +399,8 @@ def output_func(line):
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            f_output.write("Variable already exists. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Variable already exists. (line {input_list.index(line)+1})"
+            f_output.write("Variable already exists. (line"+ str(output_prog_count)+ ")")
+            assert 0 == 1, f"Variable already exists. (line {output_prog_count})"
 
         if len(vars[line[1]]) == 7:
             pass
@@ -371,6 +408,7 @@ def output_func(line):
             vars[line[1]] = (7 - len(vars[line[1]]))*"0" + vars[line[1]]
         var_index += 1
 
+    # type D, errors handled
     elif line[0] in op_codes_D:
         if len(line) > 3:
             f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
@@ -385,13 +423,16 @@ def output_func(line):
             if line[1] not in regs:
                 f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+            elif line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
             string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
                 string[12:16] + " Type D" + " " + \
                 line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
 
-    # type E, handle the error if label was never initialised- hey handled :)
+    # type E, handle the error if label was never initialised - hey handled :)
     elif line[0] in op_codes_E:
         if len(line) > 2:
             f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
@@ -408,7 +449,7 @@ def output_func(line):
             '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
         output_list.append(string)
 
-    # type F, no need to test i hope
+    # type F, errors handled
     elif line[0] == 'hlt':
         if len(line) !=1:
             f_output.write("Syntax Error. (line"+ str(input_list.index(line)+1)+ ")")
@@ -420,7 +461,8 @@ def output_func(line):
 
     # labels
     elif line[0][-1] == ':':
-        label_read(line[1:])
+        if len(line) > 1:
+            label_read(line[1:])
 
     else:
         f_output.write("Invalid opcode name or some typo in opcode name. (line"+ str(input_list.index(line)+1)+ ")")
@@ -440,7 +482,7 @@ if 'hlt' in input_list[len(input_list)-1]:
 
 if halt_flag:
     for line in input_list:
-        if line == []:  #handling empty line
+        if line == []:
             pass    
         else:
             output_func(line)

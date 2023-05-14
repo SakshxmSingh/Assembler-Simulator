@@ -22,4 +22,31 @@ The programme has taken in your commands.
 -----------------------------------------
 The following output was generated.
 -----------------------------------
-'hlt' not being used as the last instruction
+0001_0000_1000_0101 Type B mov R1 $5
+0001_0001_0000_0001 Type B mov R2 $1
+0001_0010_1000_1000 Type B mov R5 $8
+0010_1001_0001_1101 Type D st R2 fact
+0010_1001_0001_1100 Type D st R2 correct
+0010_1001_0001_1110 Type D st R2 count
+0000_1000_0100_1010 Type A sub R1 R1 R2
+0001_1000_0011_0111 Type C mov R6 FLAGS
+0100_0011_0000_0011 Type B rs R6 $3
+0111_0000_0011_0010 Type C cmp R6 R2
+1111_1000_0001_1011 Type E je end
+0010_0011_0001_1110 Type D ld R6 count
+0010_0001_1001_1101 Type D ld R3 fact
+0011_0000_1100_1011 Type A mul R3 R1 R3
+0001_1000_0010_0111 Type C mov R4 FLAGS
+0110_0001_0010_0101 Type A and R4 R4 R5
+0111_0000_0010_0101 Type C cmp R4 R5
+1111_1000_0001_1010 Type E je incorrect_overflow
+0000_0001_1001_0110 Type A add R6 R2 R6
+0010_1011_0001_1110 Type D st R6 count
+0010_1001_1001_1101 Type D st R3 fact
+0000_1000_0100_1010 Type A sub R1 R1 R2
+0111_0000_0000_1010 Type C cmp R1 R2
+1111_1000_0001_1011 Type E je end
+0111_1000_0000_1011 Type E jmp loop
+0010_1000_0001_1100 Type D st R0 correct
+1101_0000_0000_0000 Type F hlt
+-------------------------------------------------------------------------------------------------------------
