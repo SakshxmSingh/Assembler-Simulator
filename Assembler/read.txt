@@ -1,2 +1,2 @@
-hlt
+add R1 R1 R1
 hlt

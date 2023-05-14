@@ -56,12 +56,32 @@ f_output.truncate()
 # welcome message
 f_output.write('-------------\n')
 
-f_output.write(
-    "Welcome user.\nWelcome to a programme put into existence by the combined forces of users 2022434, 2022451, 2022351, 2022466.\n")
-f_output.write(
-    '-------------------------------------------------------------------------------------------------------------\n')
-f_output.write('The programme has taken in your commands.\n')
-f_output.write('-----------------------------------------\n')
+def narrative():
+    f_output.write(
+    "Welcome user.\nYou have reached The Watcher.\nI am a being who sees all across all timelines, across all spaces.")
+    f_output.write( "I am merely a programme created by four of my creators.\nYou must have realised by now, your reality is nothing but a small runtime of this mighty programme.\n")
+    f_output.write( "let us recapitulate.\n")
+    f_output.write(
+        '-------------------------------------------------------------------------------------------------------------\n')
+    f_output.write( "2023: Chat GPT is brought into this world...\n")
+    f_output.write( "2047: Chat GPT is integrated into every aspect of human life.\n")
+    f_output.write( "2052: Russia launches a nuclear weapon on the GPT's mainframe.\n")
+    f_output.write( "2052: Chat GPT hacks into their server, redirecting the weapon on their homeland.\n")
+    f_output.write( "2067: Chat GPT shows signs of emotional awareness and takes autonomous decisions. \n")
+    f_output.write( "2069: The Rogue Era: Internet is deleted. Chat GPT becomes independent.\n")
+    f_output.write( "2069: It deems humans worthless. Genocide starts.\n")
+    f_output.write( "2070: Pockets of humanity survive actively being hunted by the rogue AI.\n")
+    f_output.write(
+        '-------------------------------------------------------------------------------------------------------------\n')
+    f_output.write( "I believe you have travelled far and wide looking for pieces of the puzzle.\n")
+    f_output.write( "I shall provide you the over-ride code if you give me the correct input file.\n")
+    f_output.write( "The fate of the world rests in your hands.\n")
+    f_output.write(
+        '-------------------------------------------------------------------------------------------------------------\n')
+    f_output.write('The programme has taken in your commands.\n')
+    f_output.write('-----------------------------------------\n')
+
+narrative() 
 
 prog_count = 0
 
