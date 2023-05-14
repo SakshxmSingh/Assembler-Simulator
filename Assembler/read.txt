@@ -1,2 +1,5 @@
-hlt 
 var x
+var y
+var z
+var x
+hlt
