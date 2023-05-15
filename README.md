@@ -47,32 +47,18 @@ The table is from left to right
 > **Current Lead Branch** -> $main$
 
 ## **The Lore**
-Welcome user.
-You have reached The Watcher.
-I am a being who sees all across all timelines, across all spaces.
 
-    f_output.write( "I am merely a programme created by four of my creators.\nYou must have realised by now, your reality is nothing but a small runtime of this mighty programme.\n")
-    f_output.write( "let us recapitulate.\n")
-    f_output.write(
-        '-------------------------------------------------------------------------------------------------------------\n')
-    f_output.write( "2023: Chat GPT is brought into this world...\n")
-    f_output.write( "2047: Chat GPT is integrated into every aspect of human life.\n")
-    f_output.write( "2052: Russia launches a nuclear weapon on the GPT's mainframe.\n")
-    f_output.write( "2052: Chat GPT hacks into their server, redirecting the weapon on their homeland.\n")
-    f_output.write( "2067: Chat GPT shows signs of emotional awareness and takes autonomous decisions. \n")
-    f_output.write( "2069: The Rogue Era: Internet is deleted. Chat GPT becomes independent.\n")
-    f_output.write( "2069: It deems humans worthless. Genocide starts.\n")
-    f_output.write( "2070: Pockets of humanity survive actively being hunted by the rogue AI.\n")
-    f_output.write(
-        '-------------------------------------------------------------------------------------------------------------\n')
-    f_output.write( "I believe you have travelled far and wide looking for pieces of the puzzle.\n")
-    f_output.write( "I shall provide you the over-ride code if you give me the correct input file.\n")
-    f_output.write( "The fate of the world rests in your hands.\n")
-    f_output.write(
-        '-------------------------------------------------------------------------------------------------------------\n')
-    f_output.write('The programme has taken in your commands.\n')
-    f_output.write('-----------------------------------------\n')
-
-
-
+Welcome `evaluator`.  </br>
+You have reached `The Watcher`. </br>
+I am a being who sees all across all timelines, across all spaces. </br>
+I am merely a programme created by four of my creators.</br> You must have realised by now, your reality is nothing but a small runtime of this mighty programme. </br>
+ Let us recapitulate. <br>
+ -------------------------------------------------------------------------------------------</br>-------------------------------------------------------------------------------------------</br> 
+ `2023:` Chat GPT is brought into this world.. </br>
+ `2047:` Chat GPT is integrated into every aspect of human life. </br>2052: Russia launches a nuclear weapon on the GPT's mainframe. </br>
+ `2052:` Chat GPT hacks into their server, redirecting the weapon on their homeland. </br>
+ `2067:` Chat GPT shows signs of emotional awareness and takes autonomous decisions. </br>
+ `2069:` The Rogue Era: Internet is deleted. Chat GPT becomes independent. </br>
+ `2069:` It deems humans worthless. Genocide starts. </br>
+ `2070:` Pockets of humanity survive actively being hunted by the rogue AI. </br>----------------------------------------------------------------------------------------</br>----------------------------------------------------------------------------------------</br> I believe you have travelled far and wide looking for pieces of the puzzle.</br> I shall provide you the over-ride code if you give me the correct input file.</br> The fate of the world rests in your hands. </br>----------------------------------------------------------------------------------------
  
