@@ -55,7 +55,8 @@ I am merely a programme created by four of my creators.</br> You must have reali
  Let us recapitulate. <br>
  -------------------------------------------------------------------------------------------</br>-------------------------------------------------------------------------------------------</br> 
  `2023:` Chat GPT is brought into this world.. </br>
- `2047:` Chat GPT is integrated into every aspect of human life. </br>2052: Russia launches a nuclear weapon on the GPT's mainframe. </br>
+ `2047:` Chat GPT is integrated into every aspect of human life. </br>
+ `2052:` Russia launches a nuclear weapon on the GPT's mainframe. </br>
  `2052:` Chat GPT hacks into their server, redirecting the weapon on their homeland. </br>
  `2067:` Chat GPT shows signs of emotional awareness and takes autonomous decisions. </br>
  `2069:` The Rogue Era: Internet is deleted. Chat GPT becomes independent. </br>
