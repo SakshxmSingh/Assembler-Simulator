@@ -5,13 +5,10 @@ output_dir = 'Assembler/Bin/simpleBin'
 
 input_files = os.listdir(input_dir)
 
-for index, file_name in enumerate(input_files):
+for index, file_name in enumerate(input_files[1:]):
     base_name, extension = os.path.splitext(file_name)
     input_file_path = os.path.join(input_dir, file_name)
     output_file_path = os.path.join(output_dir, base_name+extension)
-
-    # with open(input_file_path, 'r', encoding='utf-16') as f_input:
-    #     with open(output_file_path, 'a+') as f_output:
 
     f_input = open(input_file_path, 'r', errors='replace', encoding='utf-8')
     f_output = open(output_file_path, 'a+')
