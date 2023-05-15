@@ -290,11 +290,22 @@ for index, file_name in enumerate(input_files[1:]):
             if line[1] not in labels:
                 f_output.write("Label not defined (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Label not defined. (line {input_list.index(line)+1})"
-            mem_addr = labels[line[1]]
-            string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
-            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
-                '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
-            output_list.append(string)
+            elif line[1] in labels:
+                mem_addr = labels[line[1]]
+                string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
+                string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
+                    '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+                output_list.append(string)
+            elif line[1].isdigit():
+                if len(line[1])!=7 or int(line[1],2) > prog_count:
+                    f_output.write("Incorrect memory address (line"+ str(input_list.index(line) + 1)+ ")")
+                    assert 0 == 1, f"Incorrect memory address (line {input_list.index(line) + 1})"
+                else:
+                    mem_addr = line[1]
+                    string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
+                    string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
+                        '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+                    output_list.append(string)
 
         # type F, errors handled
         elif line[0] == 'hlt':
