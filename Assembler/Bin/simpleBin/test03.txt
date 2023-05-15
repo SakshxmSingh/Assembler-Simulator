@@ -1,32 +1,7 @@
--------------
-Welcome user.
-You have reached The Watcher.
-I am a being who sees all across all timelines, across all spaces.I am merely a programme created by four of my creators.
-You must have realised by now, your reality is nothing but a small runtime of this mighty programme.
-let us recapitulate.
--------------------------------------------------------------------------------------------------------------
-2023: Chat GPT is brought into this world...
-2047: Chat GPT is integrated into every aspect of human life.
-2052: Russia launches a nuclear weapon on the GPT's mainframe.
-2052: Chat GPT hacks into their server, redirecting the weapon on their homeland.
-2067: Chat GPT shows signs of emotional awareness and takes autonomous decisions. 
-2069: The Rogue Era: Internet is deleted. Chat GPT becomes independent.
-2069: It deems humans worthless. Genocide starts.
-2070: Pockets of humanity survive actively being hunted by the rogue AI.
--------------------------------------------------------------------------------------------------------------
-I believe you have travelled far and wide looking for pieces of the puzzle.
-I shall provide you the over-ride code if you give me the correct input file.
-The fate of the world rests in your hands.
--------------------------------------------------------------------------------------------------------------
-The programme has taken in your commands.
------------------------------------------
-The following output was generated.
------------------------------------
-0001_0000_1000_0101 Type B mov R1 $5
-0001_0000_1000_0101 Type B mov R1 $5
-0001_0000_1000_0101 Type B mov R1 $5
-0001_0000_1000_0101 Type B mov R1 $5
-0001_0000_1000_0101 Type B mov R1 $5
-0001_0000_1000_0101 Type B mov R1 $5
-1101_0000_0000_0000 Type F hlt
--------------------------------------------------------------------------------------------------------------
+0001_0000_1000_0101
+0001_0000_1000_0101
+0001_0000_1000_0101
+0001_0000_1000_0101
+0001_0000_1000_0101
+0001_0000_1000_0101
+1101_0000_0000_0000

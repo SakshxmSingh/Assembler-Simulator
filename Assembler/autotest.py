@@ -130,7 +130,7 @@ for index, file_name in enumerate(input_files[1:]):
 
         if input_list[i][0][-1] == ':':     # labels
             labels.update(
-                {input_list[i][0][:len(input_list[i][0]) - 1]: bin(prog_count)[2:]})
+                {input_list[i][0][:len(input_list[i][0]) - 1]: bin(prog_count-1)[2:]})
         if input_list[i][0] =='var' and prog_count!=0:
             f_output.write("Variables not declared / declared incorrectly at the beginning (line"+ str(i+1)+ ")")
             assert 0 == 1, f"Variables not declared / declared incorrectly at the beginning (line {i+1})"
