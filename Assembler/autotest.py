@@ -71,7 +71,7 @@ for index, file_name in enumerate(input_files[1:]):
     f_output.truncate()
 
     # welcome message
-    f_output.write('-------------\n')
+    # f_output.write('-------------\n')
 
     def narrative():
         f_output.write(
@@ -98,7 +98,7 @@ for index, file_name in enumerate(input_files[1:]):
         f_output.write('The programme has taken in your commands.\n')
         f_output.write('-----------------------------------------\n')
 
-    narrative() 
+    # narrative() 
 
     prog_count = 0
 
@@ -113,9 +113,9 @@ for index, file_name in enumerate(input_files[1:]):
     elif len(input_list) > 127:
         f_output.write("Instruction(memory) limit exceeded")
         assert 0 == 1, "Instruction(memory) limit exceeded"
-    else:
-        f_output.write("The following output was generated.\n")
-        f_output.write('-----------------------------------\n')
+    # else:
+    #     f_output.write("The following output was generated.\n")
+    #     f_output.write('-----------------------------------\n')
 
     halt_flag = False
     var_count = 0
@@ -166,9 +166,9 @@ for index, file_name in enumerate(input_files[1:]):
                 assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
             string = op_codes_A[line[0]] + '00' + \
                 (regs[line[1]] + regs[line[2]] + regs[line[3]])
-            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
-                " Type A" + " " + line[0] + " " + \
-                line[1] + " " + line[2] + " " + line[3]
+            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] #+ \
+                # " Type A" + " " + line[0] + " " + \
+                # line[1] + " " + line[2] + " " + line[3]
             output_list.append(string)
 
         # type B, error handling done :)
@@ -207,8 +207,8 @@ for index, file_name in enumerate(input_files[1:]):
                     assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
                 string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
                 string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
-                    string[12:16] + " Type B" + " " + \
-                    line[0] + " " + line[1] + " " + line[2]
+                    string[12:16] #+ " Type B" + " " + \
+                    #line[0] + " " + line[1] + " " + line[2]
                 output_list.append(string)
 
         # type C, errors handled
@@ -232,8 +232,8 @@ for index, file_name in enumerate(input_files[1:]):
                     assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})" 
             string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
-                string[12:16] + " Type C" + " " + \
-                line[0] + " " + line[1] + " " + line[2]
+                string[12:16] #+ " Type C" + " " + \
+                #line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
 
         # below is variable allotment
@@ -274,8 +274,8 @@ for index, file_name in enumerate(input_files[1:]):
                     assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
                 string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
                 string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
-                    string[12:16] + " Type D" + " " + \
-                    line[0] + " " + line[1] + " " + line[2]
+                    string[12:16] #+ " Type D" + " " + \
+                    #line[0] + " " + line[1] + " " + line[2]
                 output_list.append(string)
 
         # type E, errors handled
@@ -293,7 +293,7 @@ for index, file_name in enumerate(input_files[1:]):
                 mem_addr = labels[line[1]]
                 string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
                 string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
-                    '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+                    '_' + string[12:16] #+ " Type E" + " " + line[0] + " " + line[1]
                 output_list.append(string)
             elif line[1].isdigit():
                 if len(line[1])!=7 or int(line[1],2) > prog_count:
@@ -303,7 +303,7 @@ for index, file_name in enumerate(input_files[1:]):
                     mem_addr = line[1]
                     string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
                     string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
-                        '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+                        '_' + string[12:16] #+ " Type E" + " " + line[0] + " " + line[1]
                     output_list.append(string)
 
         # type F, errors handled
@@ -313,7 +313,7 @@ for index, file_name in enumerate(input_files[1:]):
                 assert 0 == 1,f"Syntax Error (line {input_list.index(line)+1})"
             string = op_codes_F[line[0]] + '0'*11
             string = string[0:4] + '_' + string[4:8] + '_' + \
-                string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
+                string[8:12] + '_' + string[12:16] #+ " Type F" + " " + line[0]
             output_list.append(string)
 
         else:
@@ -347,9 +347,9 @@ for index, file_name in enumerate(input_files[1:]):
                 assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
             string = op_codes_A[line[0]] + '00' + \
                 (regs[line[1]] + regs[line[2]] + regs[line[3]])
-            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] + \
-                " Type A" + " " + line[0] + " " + \
-                line[1] + " " + line[2] + " " + line[3]
+            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] #+ \
+                #" Type A" + " " + line[0] + " " + \
+                #line[1] + " " + line[2] + " " + line[3]
             output_list.append(string)
 
         # type B, error handling done :)
@@ -388,8 +388,8 @@ for index, file_name in enumerate(input_files[1:]):
                     assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
                 string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
                 string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
-                    string[12:16] + " Type B" + " " + \
-                    line[0] + " " + line[1] + " " + line[2]
+                    string[12:16] #+ " Type B" + " " + \
+                    #line[0] + " " + line[1] + " " + line[2]
                 output_list.append(string)
 
         # type C, errors handled
@@ -413,8 +413,8 @@ for index, file_name in enumerate(input_files[1:]):
                     assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})" 
             string = op_codes_C[line[0]] + '0'*5 + (regs[line[1]] + regs[line[2]])
             string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
-                string[12:16] + " Type C" + " " + \
-                line[0] + " " + line[1] + " " + line[2]
+                string[12:16] #+ " Type C" + " " + \
+                #line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
 
         # variable allotment
@@ -455,8 +455,8 @@ for index, file_name in enumerate(input_files[1:]):
                     assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
                 string = op_codes_D[line[0]] + '0' + regs[line[1]] + vars[line[2]]
                 string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + \
-                    string[12:16] + " Type D" + " " + \
-                    line[0] + " " + line[1] + " " + line[2]
+                    string[12:16] #+ " Type D" + " " + \
+                    #line[0] + " " + line[1] + " " + line[2]
                 output_list.append(string)
 
         # type E, handle the error if label was never initialised - hey handled :)
@@ -474,7 +474,7 @@ for index, file_name in enumerate(input_files[1:]):
                 mem_addr = labels[line[1]]
                 string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
                 string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
-                    '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+                    '_' + string[12:16] #+ " Type E" + " " + line[0] + " " + line[1]
                 output_list.append(string)
             elif line[1].isdigit():
                 if len(line[1])!=7 or int(line[1],2) > prog_count:
@@ -484,7 +484,7 @@ for index, file_name in enumerate(input_files[1:]):
                     mem_addr = line[1]
                     string = op_codes_E[line[0]] + '0'*(4 + 7 - len(mem_addr)) + mem_addr
                     string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + \
-                        '_' + string[12:16] + " Type E" + " " + line[0] + " " + line[1]
+                        '_' + string[12:16] #+ " Type E" + " " + line[0] + " " + line[1]
                     output_list.append(string)
 
         # type F, errors handled
@@ -494,7 +494,7 @@ for index, file_name in enumerate(input_files[1:]):
                 assert 0 == 1,f"Syntax Error. (line {input_list.index(line)+1})"
             string = op_codes_F[line[0]] + '0'*11
             string = string[0:4] + '_' + string[4:8] + '_' + \
-                string[8:12] + '_' + string[12:16] + " Type F" + " " + line[0]
+                string[8:12] + '_' + string[12:16] #+ " Type F" + " " + line[0]
             output_list.append(string)
 
         # labels
@@ -532,6 +532,6 @@ for index, file_name in enumerate(input_files[1:]):
 
     for i in output_list:
         f_output.write(i+'\n')
-    f_output.write('-------------------------------------------------------------------------------------------------------------\n')
+    # f_output.write('-------------------------------------------------------------------------------------------------------------\n')
 
 #-------------end-------------------------------------------------------------------
