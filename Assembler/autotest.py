@@ -122,6 +122,9 @@ for index, file_name in enumerate(input_files[1:]):
     for i in range(len(input_list)):
         input_list[i] = input_list[i].split()
 
+        if input_list[i][0] != 'var':
+            prog_count += 1
+
         if len(input_list[i]) == 0:   # ignore empty lines
             continue
 
@@ -131,9 +134,6 @@ for index, file_name in enumerate(input_files[1:]):
         if input_list[i][0] =='var' and prog_count!=0:
             f_output.write("Variables not declared / declared incorrectly at the beginning (line"+ str(i+1)+ ")")
             assert 0 == 1, f"Variables not declared / declared incorrectly at the beginning (line {i+1})"
-        if len(input_list[i]) != 0:
-            if input_list[i][0] != 'var':
-                prog_count += 1
 
     vars = {}
     var_index = prog_count
@@ -146,7 +146,6 @@ for index, file_name in enumerate(input_files[1:]):
         global input_list
         global output_prog_count
 
-        output_prog_count += 1
         # type A, error handling done :)
         if line[0] in op_codes_A:        
             
@@ -328,7 +327,6 @@ for index, file_name in enumerate(input_files[1:]):
         global input_list
         global output_prog_count
 
-        output_prog_count += 1
         # type A, register error handling
         if line[0] in op_codes_A:        
             
@@ -522,6 +520,7 @@ for index, file_name in enumerate(input_files[1:]):
 
     if halt_flag:
         for line in input_list:
+            output_prog_count += 1
             if line == []:
                 pass    
             else:
