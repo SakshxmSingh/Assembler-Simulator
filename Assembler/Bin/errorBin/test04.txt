@@ -1,1 +1,0 @@
-Variables not declared / declared incorrectly at the beginning (line3)
