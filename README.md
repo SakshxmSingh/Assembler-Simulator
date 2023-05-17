@@ -22,23 +22,21 @@ The table is from left to right
 
   
   
-  
+## **How to evaluate**
+### **For Assembler**
+In terminal, go to `automatedTesting` directory and enter `./run --no-sim`. A complete report sheet will be generated in the terminal
   
 
-## **Exploring the Folder - Assembler**
+## **A guide**
 
-1. **Test Cases:** This folder contains the sample test cases provided by the evaluator. It further contains
-    1. `ErrorGen`
-    2. `HardGen`
-    3. `SimpleGen`
-    4. `TestCase Answers`
-    which are all self explanatory.
-2. **Bin:** This folder contains the output for above sample test cases provided by the evaluator.
-    1. `errorbin:` Outputs for ErrorGen
-    2. `hardbin:`Outputs for HardGen
-    3. `simplebin:`Outputs for SimpleGen
-3. **autotest.py:** This is the programme written to take the test cases from respective subfolders in Test Cases Folder and write the output in the corresponding subfolders in Bin Folder.
-3. **temp.py:** This is the programme written to take in input from `read.txt` and write the output in `write.txt.`
+1. **automatedTesting:** This folder contains
+    - the sample test cases provided by the evaluator: `tests/assembly`
+    - the grading script: `src`
+    - the run file: `run`
+
+2. **Simple-Assembler:** This folder contains 
+    - Python programme which gives stdin and stdout and is used for automated testing:- `main.py`
+    - Python programme that reads from **read.txt** and writes output in **write.txt**:- `readable.py`
 
 ## **Some things to consider**
 - In case the programme reads an empty line, it is ignored in respect to giving output but it is considered in respect to incrementing the programme counter.
