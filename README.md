@@ -13,7 +13,7 @@ The table is from left to right
 
   
 
-| Author | Roll No. | Git Username |
+| Author | Roll No. | Github Username |
 | -------- | -------- | -------- |
 | Parth Garg    | 2022351   | `@ParthGarg243`   |
 | Shagun Yadav   | 2022466 | `@kyukuu`  |
@@ -40,7 +40,7 @@ In terminal, go to `automatedTesting` directory and enter `./run --no-sim`. A co
 
 ## **Some things to consider**
 - In case the programme reads an empty line, it is ignored in respect to giving output but it is considered in respect to incrementing the programme counter.
-- in case of any errors, the machine code doesn't get printed and the error is displayed in the terminal and the output file
+- In case of any errors, the machine code doesn't get printed and the error is displayed in the terminal and the output file, as an assertion error
 
 > **Current Lead Branch** -> $main$
 
