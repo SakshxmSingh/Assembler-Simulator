@@ -1,0 +1,2 @@
+class mem:
+    pass
