@@ -1,17 +1,7 @@
 import os
 
-# input_dir = 'Assembler/TestCases/SimpleGen'
-# output_dir = 'Assembler/Bin/simpleBin'
-
-# input_files = os.listdir(input_dir)
-
-# for index, file_name in enumerate(input_files[1:]):
-#     base_name, extension = os.path.splitext(file_name)
-#     input_file_path = os.path.join(input_dir, file_name)
-#     output_file_path = os.path.join(output_dir, base_name+extension)
-
-f_input = open('Assembler/read.txt', 'r', errors='replace', encoding='utf-8')
-f_output = open('Assembler/write.txt', 'a+')
+f_input = open('Simple-Assembler/read.txt', 'r', errors='replace', encoding='utf-8')
+f_output = open('Simple-Assembler/write.txt', 'a+')
 
 #-------------start----------------------------------------------------------------------------------
 
@@ -28,13 +18,16 @@ op_codes_B = {
     'mov': '00010',
     'rs': '01000',
     'ls': '01101',
+    'rrf': '10011',
+    'rlf': '10100'
 }
 
 op_codes_C = {
     'mov': '00011',
     'div': '00111',
     'not': '01001',
-    'cmp': '01110'
+    'cmp': '01110',
+    'swapf': '10010'
 }
 
 op_codes_D = {
@@ -51,6 +44,11 @@ op_codes_E = {
 
 op_codes_F = {
     'hlt': '11010'
+}
+
+op_codes_G = {
+    'bcf': '10000',
+    'bsf': '10001'
 }
 
 regs = {
@@ -309,6 +307,45 @@ def label_read(line):
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] #+ " Type F" + " " + line[0]
         output_list.append(string)
 
+    # type G, errors handled
+    elif line[0] in op_codes_G:
+        
+        if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
+        elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+            f_output.write("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
+        if line[2][1:].isdigit() ==False:
+            f_output.write("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+        binary = bin(int(line[2][1:])).replace("0b", "")
+        # I have ignored the case where they give negative number as input.
+        if len(binary) > 4:
+            f_output.write("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
+
+        else:
+            if len(binary) == 4:
+                pass
+            elif len(binary) < 4:
+                binary = (4 - len(binary))*"0" + binary
+
+            if line[1] not in regs:
+                f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+            elif line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+            string = op_codes_B[line[0]] + '0000' + (regs[line[1]]) + binary
+            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] #" Type B" + " " + 
+                # line[0] + " " + line[1] + " " + line[2]
+            output_list.append(string)
+
+
     else:
         f_output.write("Invalid opcode name or some typo in opcode name. (line"+ str(input_list.index(line)+1)+ ")")
         assert 0 == 1,f"Invalid opcode name or some typo in opcode name. (line {input_list.index(line)+1})"
@@ -482,6 +519,46 @@ def output_func(line):
         string = op_codes_F[line[0]] + '0'*11
         string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] #+ " Type F" + " " + line[0]
         output_list.append(string)
+
+    
+    # type G, errors handled
+    elif line[0] in op_codes_G:
+        
+        if len(line) > 3:
+            f_output.write("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+        if len(line) < 3:
+            f_output.write("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
+        elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+            f_output.write("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
+        if line[2][1:].isdigit() ==False:
+            f_output.write("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+        binary = bin(int(line[2][1:])).replace("0b", "")
+        # I have ignored the case where they give negative number as input.
+        if len(binary) > 4:
+            f_output.write("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
+            assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
+
+        else:
+            if len(binary) == 4:
+                pass
+            elif len(binary) < 4:
+                binary = (4 - len(binary))*"0" + binary
+
+            if line[1] not in regs:
+                f_output.write("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+            elif line[1] == "FLAGS":
+                f_output.write("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+            string = op_codes_B[line[0]] + '0000' + (regs[line[1]]) + binary
+            string = string[0:4] + '_' + string[4:8] + '_' + string[8:12] + '_' + string[12:16] #" Type B" + " " + 
+                # line[0] + " " + line[1] + " " + line[2]
+            output_list.append(string)
+
 
     # labels
     elif line[0][-1] == ':':
