@@ -18,6 +18,9 @@ def Floating_to_IEEE(decimal):
     binary = bin_whole + '.' + bin_fractional
     print("bin",binary)
 
+    #BINARY completed here.
+    
+
     exponent = -1
     for i in binary:
         if i != ".":
