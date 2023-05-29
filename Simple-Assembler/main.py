@@ -325,7 +325,7 @@ def label_read(line):
             elif line[1] == "FLAGS":
                 print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
-            string = op_codes_B[line[0]] + '0000' + (regs[line[1]]) + binary
+            string = op_codes_G[line[0]] + '0000' + (regs[line[1]]) + binary
             string = string[0:4]  + string[4:8]  + string[8:12]  + string[12:16] #" Type B" + " " + 
                 # line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
@@ -536,7 +536,7 @@ def output_func(line):
             elif line[1] == "FLAGS":
                 print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
-            string = op_codes_B[line[0]] + '0000' + (regs[line[1]]) + binary
+            string = op_codes_G[line[0]] + '0000' + (regs[line[1]]) + binary
             string = string[0:4]  + string[4:8]  + string[8:12]  + string[12:16] #+ " Type B" + " " + \
                 #line[0] + " " + line[1] + " " + line[2]
             output_list.append(string)
