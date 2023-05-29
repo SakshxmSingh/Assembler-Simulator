@@ -16,7 +16,7 @@ def Floating_to_IEEE(decimal):
 
     # Combine the whole number and fractional part
     binary = bin_whole + '.' + bin_fractional
-    #print("bin",binary)
+    print("bin",binary)
 
     exponent = -1
     for i in binary:
@@ -27,7 +27,7 @@ def Floating_to_IEEE(decimal):
 
     bias = 3
     exponent = exponent + bias
-    #print("E",exponent)
+    print("E",exponent)
     E = bin(exponent)[2:]
 
     if len(E) == 1:
@@ -60,18 +60,69 @@ def Floating_to_IEEE(decimal):
     if len(M) >= 5:
         pass
 
-    return E + M
+
+    # CASE 1: E is 111
+    if int(E) == 111:
+        if int(M) == 0:
+            return "infinity"
+        else:
+            return "not a number"
+        
+    #CASE 2" E is 000
+    elif int(E) == 0:
+        if int(M) == 0:
+            return "00000000"
+        else:
+            return "not a number"
+        
+    #CASE 3: E is something betwwen 000 and 111
+    else:
+        return E + M
 
 def IEEE_to_Floating(EM):
 
-    E = EM[:3]
-    M = EM[3:]
+    if EM.isdigit() == False:
+        return "expected an IEEE format"
+    else: 
+        E = EM[:3]
+        M = EM[3:]
 
-    exponent = int(E,2)
-    print(exponent)
+        exponent = int(E,2)
+        exponent = exponent - 3
+        print(exponent)
 
+        P = "1." + EM[3:]
+        print(P)
 
-    return decimal
+        Plist = list(P)
+        Plist.remove(".")
+        
+        Plist.insert(exponent+1,".")
+        binary = "".join(Plist)
+        print(binary)
+
+        point = binary.find('.')
+
+        if point == -1:
+            point = len(binary)
+
+        intDecimal = 0
+        fracDecimal = 0
+        twos = 1
+
+        for i in range(point-1, -1, -1):
+            intDecimal += ((ord(binary[i]) - ord('0')) * twos)
+            twos *= 2
+
+        twos = 2
+
+        for i in range(point + 1, len(binary)):
+            fracDecimal += ((ord(binary[i]) - ord('0')) / twos)
+            twos *= 2.0
+
+        decimal = intDecimal + fracDecimal
+
+        return decimal
 
 
 
