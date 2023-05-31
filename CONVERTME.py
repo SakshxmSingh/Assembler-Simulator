@@ -87,9 +87,9 @@ def findIEEE_FI(decimal):
     IEEE = E+M
     return IEEE
 
-decimal = float(input())
-IEEE = findIEEE_FI(decimal)
-print(IEEE)
+# decimal = float(input())
+# IEEE = findIEEE_FI(decimal)
+# print(IEEE)
 
 def findE_IF(IEEE):
     E = IEEE[:3]
@@ -143,6 +143,7 @@ def bin_to_dec_IF(IEEE):
     decima = float(decwholepart)+float(decfracpart)
     return str(decima)
 
-dec = bin_to_dec_IF(IEEE)
+# dec = bin_to_dec_IF(IEEE)
 
-print(dec)
+# print(dec)
+
