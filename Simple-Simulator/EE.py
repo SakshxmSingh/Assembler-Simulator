@@ -23,9 +23,15 @@ class ee:
                 if instruction[0:5] == '00000':
                     temp = bin_to_int(regData.registers[opreg1]) + bin_to_int(regData.registers[opreg2]) #need to set for overflow flags and errors, but basic structure gonna be like this
                     temp = int_to_bin(temp)
+
                     if len(temp) > 16:
                         # set of flags regarding overflow
+
                         pass
+
                     elif len(temp) < 16:
                         temp = temp.zfill(16)
+                    
                     regData.registers[destreg] = temp
+                    progCount.pc+=1
+                    return False, progCount.pc
