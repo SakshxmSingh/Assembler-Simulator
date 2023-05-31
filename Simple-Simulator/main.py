@@ -8,6 +8,7 @@ progMem = mem() # Create memory object
 progMem.initialize(sys.stdin.readlines()) # Load memory from stdin
 
 progCount = pc() # Create PC object
+regData = rf() # Create RF object
 
 halted = False
 while(not halted):

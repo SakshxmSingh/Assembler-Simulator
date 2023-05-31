@@ -147,3 +147,14 @@ def bin_to_dec_IF(IEEE):
 
 # print(dec)
 
+def int_to_bin(integer):
+    # DECIMAL TO BINARY CONVERSION 
+    binary = bin(integer)[2:]
+    return binary
+
+def bin_to_int(binstr):
+    # BINARY TO DECIMAL CONVERSION
+    decimal = int(binstr,2)
+    return decimal
+
+
