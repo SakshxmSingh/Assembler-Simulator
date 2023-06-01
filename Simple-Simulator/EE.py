@@ -8,11 +8,15 @@ from PC import pc
 class ee:
 
     def execute(instruction):
+
+        #type F
         if instruction[0:5] in opcodes.op_codes_F:
-            progCount.pc+=1
-            return True, progCount.pc                 # needs to be taken care of, what index to return when halt is encountered
+            temp_pc = progCount.pc+1
+            return True, temp_pc                 # needs to be taken care of, what index to return when halt is encountered
         else:
             # need to implement the rest of the opcodes individually w.r.t. their respective instruction and how to execute them
+            
+            #-----------------------type A--------------------------------
             if instruction[0:5] in opcodes.op_codes_A:
                 opreg1 = instruction[10:13]
                 opreg2 = instruction[13:16]
@@ -33,5 +37,46 @@ class ee:
                         temp = temp.zfill(16)
                     
                     regData.registers[destreg] = temp
-                    progCount.pc+=1
-                    return False, progCount.pc
+                    temp_pc = progCount.pc+1
+                    return False, temp_pc
+
+            
+
+            #------------------------type E-------------------------------
+            if instruction[0:5] in opcodes.op_codes_E:
+                destInt = instruction[9:16]
+
+                #jmp
+                if instruction[0:5]=='01111':
+                    temp_pc = bin_to_int(destInt)
+                    return False, temp_pc
+                
+                #jlt
+                elif instruction[0:5]=='11100':
+                    if regData.registers['FLAGS'][13]=='1':
+                        temp_pc = bin_to_int(destInt)
+                        return False, temp_pc
+                    
+                    else:
+                        temp_pc = progCount.pc+1
+                        return False, temp_pc
+
+                #jgt
+                elif instruction[0:5]=='11101':
+                    if regData.registers['FLAGS'][12]=='1':
+                        temp_pc = bin_to_int(destInt)
+                        return False, temp_pc
+                    
+                    else:
+                        temp_pc = progCount.pc+1
+                        return False, temp_pc
+                
+                #je
+                elif instruction[0:5]=='11111':
+                    if regData.registers['FLAGS'][14]=='1':
+                        temp_pc = bin_to_int(destInt)
+                        return False, temp_pc
+                    
+                    else:
+                        temp_pc = progCount.pc+1
+                        return False, temp_pc

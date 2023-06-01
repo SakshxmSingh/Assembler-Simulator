@@ -15,7 +15,7 @@ while(not halted):
     Instruction = progMem.fetchData(progCount.pc); # Get current instruction
     halted, new_PC = ee.execute(Instruction) # Update RF compute new_PC
     progCount.dump() # Print PC
-    rf.dump() # Print RF state
+    regData.dump() # Print RF state
     progCount.update(new_PC) # Update PC
 
 
