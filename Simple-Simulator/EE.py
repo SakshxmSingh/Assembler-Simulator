@@ -4,6 +4,7 @@ from main import progCount
 from main import regData
 from RF import rf
 from PC import pc
+from MEM import mem
 
 class ee:
 
@@ -40,20 +41,36 @@ class ee:
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
-            
+
+            #------------------------type D-------------------------------
+            if instruction[0:5] in opcodes.op_codes_D:
+                workingReg = bin_to_int(instruction[6:9])
+                workingMemAddr = int(instruction[9:16])
+
+                if instruction[0:5] == '00100':
+                    value = mem.fetchData(workingMemAddr)
+                    rf.writeData(workingReg, value)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+                
+                elif instruction[0:5] == '00101':
+                    value = rf.fetchData(workingReg)
+                    mem.writeData(workingMemAddr, value)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
 
             #------------------------type E-------------------------------
             if instruction[0:5] in opcodes.op_codes_E:
                 destInt = instruction[9:16]
 
                 #jmp
-                if instruction[0:5]=='01111':
+                if instruction[0:5] == '01111':
                     temp_pc = bin_to_int(destInt)
                     return False, temp_pc
                 
                 #jlt
-                elif instruction[0:5]=='11100':
-                    if regData.registers['FLAGS'][13]=='1':
+                elif instruction[0:5] == '11100':
+                    if regData.registers['FLAGS'][13] == '1':
                         temp_pc = bin_to_int(destInt)
                         return False, temp_pc
                     
@@ -62,8 +79,8 @@ class ee:
                         return False, temp_pc
 
                 #jgt
-                elif instruction[0:5]=='11101':
-                    if regData.registers['FLAGS'][12]=='1':
+                elif instruction[0:5] == '11101':
+                    if regData.registers['FLAGS'][12] == '1':
                         temp_pc = bin_to_int(destInt)
                         return False, temp_pc
                     
@@ -72,8 +89,8 @@ class ee:
                         return False, temp_pc
                 
                 #je
-                elif instruction[0:5]=='11111':
-                    if regData.registers['FLAGS'][14]=='1':
+                elif instruction[0:5] == '11111':
+                    if regData.registers['FLAGS'][14] == '1':
                         temp_pc = bin_to_int(destInt)
                         return False, temp_pc
                     
