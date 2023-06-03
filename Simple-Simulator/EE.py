@@ -20,27 +20,152 @@ class ee:
             
             #-----------------------type A--------------------------------
             if instruction[0:5] in opcodes.op_codes_A:
-                opreg1 = instruction[10:13]
-                opreg2 = instruction[13:16]
-                destreg = instruction[7:10]
+                regA = instruction[10:13]
+                regB = instruction[13:16]
+                destination = instruction[7:10]
 
                 
                 # for addition
                 if instruction[0:5] == '00000':
-                    temp = bin_to_int(regData.registers[opreg1]) + bin_to_int(regData.registers[opreg2]) #need to set for overflow flags and errors, but basic structure gonna be like this
-                    temp = int_to_bin(temp)
+                    IntegerSum = bin_to_int(int(rf.registers[regA])) + int(bin_to_int(rf.registers[regB])) 
+                    #converted them to int, not sure if this is correct usage, seems correct to me, but just to be double sure
+                    #need to set for overflow flags and errors, but basic structure gonna be like this
+                    BinarySum = int_to_bin(IntegerSum)
 
-                    if len(temp) > 16:
-                        # set of flags regarding overflow
+                    if len(binarySum) > 16: #overflow
+                        rf.registers[flag][-4] = '1'
+                        regData.writeData('R1', '0000000000000000')
+                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
-                        pass
-
-                    elif len(temp) < 16:
-                        temp = temp.zfill(16)
+    
+                    BinarySum = BinarySum.zfill(16)
+                    regData.writeData('R1', BinarySum)
                     
-                    regData.registers[destreg] = temp
-                    temp_pc = progCount.pc+1
+                    temp_pc = progCount + 1
                     return False, temp_pc
+                
+                # for subtraction
+                if instruction[0:5] == '00001':
+                    IntegerDifference = bin_to_int(int(rf.registers[regA])) - int(bin_to_int(rf.registers[regB])) 
+                    #converted them to int, not sure if this is correct usage, seems correct to me, but just to be double sure
+                    #need to set for overflow flags and errors, but basic structure gonna be like this
+                    BinaryDifference = int_to_bin(IntegerDifference)
+
+                    if len(BinaryDifference) > 16: #overflow
+                        rf.registers[flag][-4] = '1'
+                        regData.writeData('R1', '0000000000000000')
+                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+
+    
+                    BinaryDifference = BinaryDifference.zfill(16)
+                    regData.writeData('R1', BinaryDifference)
+                    
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+
+                # for multiplication
+                if instruction[0:5] == '00110':
+                    IntegerMult = bin_to_int(int(rf.registers[regA])) * int(bin_to_int(rf.registers[regB])) 
+                    #converted them to int, not sure if this is correct usage, seems correct to me, but just to be double sure
+                    #need to set for overflow flags and errors, but basic structure gonna be like this
+                    BinaryMult = int_to_bin(IntegerMult)
+
+                    if len(binaryMult) > 16: #overflow
+                        rf.registers[flag][-4] = '1'
+                        regData.writeData('R1', '0000000000000000')
+                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+
+    
+                    BinaryMult= BinaryMult.zfill(16)
+                    regData.writeData('R1', BinaryMult)
+                    
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+                
+                # for bitwise XOR
+                if instruction[0:5] == '01010':
+                    BinaryXOR=int(rf.registers[regA]) ^ int(rf.registers[regB])
+                    if len(binaryXOR) > 16: #overflow
+                        rf.registers[flag][-4] = '1'
+                        regData.writeData('R1', '0000000000000000')
+                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+
+    
+                    BinaryXOR= BinaryXOR.zfill(16)
+                    regData.writeData('R1', BinaryXOR)
+                    
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+                
+                # for bitwise OR
+                if instruction[0:5] == '01011':
+                    Binary0R=int(rf.registers[regA]) | int(rf.registers[regB])
+                    if len(binaryOR) > 16: #overflow
+                        rf.registers[flag][-4] = '1'
+                        regData.writeData('R1', '0000000000000000')
+                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+
+    
+                    BinaryOR= BinaryOR.zfill(16)
+                    regData.writeData('R1', BinaryOR)
+                    
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+                
+                # for bitwise AND
+                if instruction[0:5] == '01100':
+                    BinaryAND=int(rf.registers[regA]) & int(rf.registers[regB])
+                    if len(binaryAND) > 16: #overflow
+                        rf.registers[flag][-4] = '1'
+                        regData.writeData('R1', '0000000000000000')
+                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+
+    
+                    BinaryAND= BinaryAND.zfill(16)
+                    regData.writeData('R1', BinaryAND)
+                    
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+                
+
+
+             #-----------------------type B--------------------------------
+            if instruction[0:5] in opcodes.op_codes_B:
+                regA = instruction[7:9]
+                Imm=instruction[9:16]
+
+                # for move immediate
+                if instruction[0:5]=='00010':
+
+                    Imm=int(Imm)
+                    Imm=Imm.zfill(16)#this zfills thingy actually works?
+                    regData.writeData('R1',Imm)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+
+                # for right shift
+                if instruction[0:5]=='01000':
+
+                    Imm=bin_to_int(int(Imm))
+    
+                    regA=regA >> Imm
+                    regA=regA.zfill(16)#this zfills thingy actually works?
+                    regData.writeData('R1',regA)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+                
+                # for left shift
+                if instruction[0:5]=='01010':
+
+                    Imm=bin_to_int(int(Imm))
+    
+                    regA=regA << Imm
+                    regA=regA.zfill(16)#this zfills thingy actually works?
+                    regData.writeData('R1',regA)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+
+
 
             #------------------------type C-------------------------------
             if instruction[0:5] in opcodes.op_codes_C:
@@ -106,6 +231,8 @@ class ee:
                     temp_pc = progCount + 1
                     return False, temp_pc
 
+            
+            
             #------------------------type D-------------------------------
             if instruction[0:5] in opcodes.op_codes_D:
                 workingReg = opcodes.regs[instruction[6:9]]
@@ -123,6 +250,8 @@ class ee:
                     temp_pc = progCount + 1
                     return False, temp_pc
 
+            
+            
             #------------------------type E-------------------------------
             if instruction[0:5] in opcodes.op_codes_E:
                 destInt = instruction[9:16]
