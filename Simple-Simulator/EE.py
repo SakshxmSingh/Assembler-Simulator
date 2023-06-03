@@ -2,6 +2,7 @@ import opcodes
 from CONVERTME import int_to_bin, bin_to_int
 from main import progCount
 from main import regData
+from main import memData
 from RF import rf
 from PC import pc
 from MEM import mem
@@ -41,6 +42,28 @@ class ee:
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
+            #------------------------type C-------------------------------
+            if instruction[0:5] in opcodes.op_codes_C:
+                opreg1 = bin_to_int(instruction[10:13])
+                opreg2 = bin_to_int(instruction[13:16])
+
+                if instruction[0:5] == '00011':
+                    value = memData.fetchData[opreg2]
+                    memData.writeData[opreg1, value]
+                    temp_pc = progCount + 1
+                    return False, temp_pc
+
+                elif instruction[0:5] == '00111':
+                    pass
+
+                elif instruction[0:5] == '01001':
+                    pass
+                
+                elif instruction[0:5] == '01110':
+                    pass
+
+                elif instruction[0:5] == '10010':
+                    pass
 
             #------------------------type D-------------------------------
             if instruction[0:5] in opcodes.op_codes_D:
@@ -48,14 +71,14 @@ class ee:
                 workingMemAddr = int(instruction[9:16])
 
                 if instruction[0:5] == '00100':
-                    value = mem.fetchData(workingMemAddr)
-                    rf.writeData(workingReg, value)
+                    value = memData.fetchData(workingMemAddr)
+                    regData.writeData(workingReg, value)
                     temp_pc = progCount + 1
                     return False, temp_pc
                 
                 elif instruction[0:5] == '00101':
-                    value = rf.fetchData(workingReg)
-                    mem.writeData(workingMemAddr, value)
+                    value = regData.fetchData(workingReg)
+                    memData.writeData(workingMemAddr, value)
                     temp_pc = progCount + 1
                     return False, temp_pc
 

@@ -9,6 +9,7 @@ progMem.initialize(sys.stdin.readlines()) # Load memory from stdin
 
 progCount = pc() # Create PC object
 regData = rf() # Create RF object
+memData = mem() # Create memory object for Type D ops
 
 halted = False
 while(not halted):
