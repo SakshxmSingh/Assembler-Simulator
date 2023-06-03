@@ -44,37 +44,78 @@ class ee:
 
             #------------------------type C-------------------------------
             if instruction[0:5] in opcodes.op_codes_C:
-                opreg1 = bin_to_int(instruction[10:13])
-                opreg2 = bin_to_int(instruction[13:16])
+                opreg1 = opcodes.regs[instruction[10:13]]
+                opreg2 = opcodes.regs[instruction[13:16]]
 
                 if instruction[0:5] == '00011':
-                    value = memData.fetchData[opreg2]
-                    memData.writeData[opreg1, value]
+                    value = regData.fetchData[opreg2]
+                    regData.writeData[opreg1, value]
                     temp_pc = progCount + 1
                     return False, temp_pc
 
                 elif instruction[0:5] == '00111':
-                    pass
+                    reg1Value = bin_to_int(regData.fetchData[opreg1])
+                    reg2Value = bin_to_int(regData.fetchData[opreg2])
+                    if reg2Value == 0:
+                        regData.registers['FLAGS'][12] = '1'
+                        regData.writeData('R0', '0000000000000000')
+                        regData.writeData('R1', '0000000000000000')
+                    
+                    else:
+                        regData.registers['FLAGS'][12] = '0'
+                        quotient = int(reg1Value / reg2Value)
+                        quotient = int_to_bin(quotient)
+                        quotient = quotient.zfill(16)
+                        remainder = int(reg1Value % reg2Value)
+                        remainder = int_to_bin(remainder)
+                        remainder = remainder.zfill(16)
+                        regData.writeData('R0', quotient)
+                        regData.writeData('R1', remainder)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
 
-                elif instruction[0:5] == '01001':
-                    pass
+
+                elif instruction[0:5] == '01101':
+                    value = regData.fetchData(opreg2)
+                    for i in range(16):
+                        if value[i] == '0':
+                            value[i] = '1'
+                        else:
+                            value[i] = '0'
+                    regData.writeData(opreg2, value)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
                 
                 elif instruction[0:5] == '01110':
-                    pass
+                    reg1Value = bin_to_int(regData.fetchData(opreg1))
+                    reg2Value = bin_to_int(regData.fetchData(opreg2))
+                    if reg1Value > reg2Value:
+                        regData.registers['FLAGS'][14] = '1'
+                    elif reg1Value < reg2Value:
+                        regData.registers['FLAGS'][13] = '1'
+                    elif reg1Value == reg2Value:
+                        regData.registers['FLAGS'][15] = '1'
+                    temp_pc = progCount + 1
+                    return False, temp_pc
 
                 elif instruction[0:5] == '10010':
-                    pass
+                    reg1Value = regData.fetchData(opreg1)
+                    reg2Value = regData.fetchData(opreg2)
+                    regData.writeData(opreg1, reg2Value)
+                    regData.writeData(opreg2, reg1Value)
+                    temp_pc = progCount + 1
+                    return False, temp_pc
 
             #------------------------type D-------------------------------
             if instruction[0:5] in opcodes.op_codes_D:
-                workingReg = bin_to_int(instruction[6:9])
-                workingMemAddr = int(instruction[9:16])
+                workingReg = opcodes.regs[instruction[6:9]]
+                workingMemAddr = bin_to_int(instruction[9:16])
 
                 if instruction[0:5] == '00100':
                     value = memData.fetchData(workingMemAddr)
                     regData.writeData(workingReg, value)
                     temp_pc = progCount + 1
-                    return False, temp_pc
+                    return False, temp_pc 
                 
                 elif instruction[0:5] == '00101':
                     value = regData.fetchData(workingReg)

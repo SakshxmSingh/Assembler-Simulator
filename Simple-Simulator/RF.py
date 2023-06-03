@@ -11,11 +11,11 @@ class rf:
                           'R7':'0000000000000000',
                           'FLAGS':'0000000000000000'}
     
-    def writeData(self, index, value):
-        self.registers[index] = value
+    def writeData(self, key, value):
+        self.registers[key] = value
 
-    def fetchData(self, index):
-        return self.registers[index]
+    def fetchData(self, key):
+        return self.registers[key]
 
     def dump(self):
         for i in self.registers:
