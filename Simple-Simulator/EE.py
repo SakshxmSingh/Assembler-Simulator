@@ -28,103 +28,104 @@ class ee:
                 # for addition
                 if instruction[0:5] == '00000':
                     IntegerSum = bin_to_int(int(rf.registers[regA])) + int(bin_to_int(rf.registers[regB])) 
-                    #converted them to int, not sure if this is correct usage, seems correct to me, but just to be double sure
-                    #need to set for overflow flags and errors, but basic structure gonna be like this
                     BinarySum = int_to_bin(IntegerSum)
+                    
+                    temp_pc = progCount.pc+1
 
                     if len(BinarySum) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
-                        regData.writeData('R1', '0000000000000000')
-                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
-
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
     
                     BinarySum = BinarySum.zfill(16)
-                    regData.writeData('R1', BinarySum)
+                    regData.writeData(opcodes.regs[destination], BinarySum)
                     
-                    temp_pc = progCount + 1
+                    
                     return False, temp_pc
                 
                 # for subtraction
                 if instruction[0:5] == '00001':
                     IntegerDifference = bin_to_int(int(rf.registers[regA])) - int(bin_to_int(rf.registers[regB])) 
-                    #converted them to int, not sure if this is correct usage, seems correct to me, but just to be double sure
-                    #need to set for overflow flags and errors, but basic structure gonna be like this
                     BinaryDifference = int_to_bin(IntegerDifference)
+
+                    temp_pc = progCount.pc+1
 
                     if len(BinaryDifference) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
-                        regData.writeData('R1', '0000000000000000')
-                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
-
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
     
                     BinaryDifference = BinaryDifference.zfill(16)
-                    regData.writeData('R1', BinaryDifference)
+                    regData.writeData(opcodes.regs[destination], BinaryDifference)
                     
-                    temp_pc = progCount + 1
                     return False, temp_pc
 
                 # for multiplication
                 if instruction[0:5] == '00110':
                     IntegerMult = bin_to_int(int(rf.registers[regA])) * int(bin_to_int(rf.registers[regB])) 
-                    #converted them to int, not sure if this is correct usage, seems correct to me, but just to be double sure
-                    #need to set for overflow flags and errors, but basic structure gonna be like this
                     BinaryMult = int_to_bin(IntegerMult)
 
+                    temp_pc = progCount.pc+1
+                    
                     if len(BinaryMult) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
-                        regData.writeData('R1', '0000000000000000')
-                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
 
     
                     BinaryMult= BinaryMult.zfill(16)
-                    regData.writeData('R1', BinaryMult)
+                    regData.writeData(opcodes.regs[destination], BinaryMult)
                     
-                    temp_pc = progCount + 1
+                    
                     return False, temp_pc
                 
                 # for bitwise XOR
                 if instruction[0:5] == '01010':
                     BinaryXOR=int(rf.registers[regA]) ^ int(rf.registers[regB])
+                    temp_pc = progCount.pc+1
+
                     if len(BinaryXOR) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
-                        regData.writeData('R1', '0000000000000000')
-                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
-
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
     
                     BinaryXOR= BinaryXOR.zfill(16)
-                    regData.writeData('R1', BinaryXOR)
+                    regData.writeData(opcodes.regs[destination], BinaryXOR)
                     
-                    temp_pc = progCount + 1
+                    
                     return False, temp_pc
                 
                 # for bitwise OR
                 if instruction[0:5] == '01011':
                     Binary0R=int(rf.registers[regA]) | int(rf.registers[regB])
+                    temp_pc = progCount.pc+1
+
                     if len(BinaryOR) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
-                        regData.writeData('R1', '0000000000000000')
-                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
-
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
     
                     BinaryOR= BinaryOR.zfill(16)
-                    regData.writeData('R1', BinaryOR)
+                    regData.writeData(opcodes.regs[destination], BinaryOR)
                     
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc+1
                     return False, temp_pc
                 
                 # for bitwise AND
                 if instruction[0:5] == '01100':
                     BinaryAND=int(rf.registers[regA]) & int(rf.registers[regB])
+                    temp_pc = progCount.pc+1
+
                     if len(BinaryAND) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
-                        regData.writeData('R1', '0000000000000000')
-                        # return statement for when flag is set isn't written yet, program counter also needs to be updated
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
 
     
                     BinaryAND= BinaryAND.zfill(16)
-                    regData.writeData('R1', BinaryAND)
+                    regData.writeData(opcodes.regs[destination], BinaryAND)
                     
-                    temp_pc = progCount + 1
+                    
                     return False, temp_pc
                 
 
@@ -139,8 +140,8 @@ class ee:
 
                     Imm=int(Imm)
                     Imm=Imm.zfill(16)#this zfills thingy actually works?
-                    regData.writeData('R1',Imm)
-                    temp_pc = progCount + 1
+                    regData.writeData(opcodes.regs[regA],Imm)
+                    temp_pc = progCount.pc+1
                     return False, temp_pc
 
                 # for right shift
@@ -150,8 +151,8 @@ class ee:
     
                     regA=regA >> Imm
                     regA=regA.zfill(16)#this zfills thingy actually works?
-                    regData.writeData('R1',regA)
-                    temp_pc = progCount + 1
+                    regData.writeData(opcodes.regs[regA],regA)
+                    temp_pc = progCount.pc+1
                     return False, temp_pc
                 
                 # for left shift
@@ -161,8 +162,8 @@ class ee:
     
                     regA=regA << Imm
                     regA=regA.zfill(16)#this zfills thingy actually works?
-                    regData.writeData('R1',regA)
-                    temp_pc = progCount + 1
+                    regData.writeData(opcodes.regs[regA],regA)
+                    temp_pc = progCount.pc+1
                     return False, temp_pc
 
 
