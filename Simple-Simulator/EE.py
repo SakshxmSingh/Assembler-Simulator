@@ -80,9 +80,10 @@ class ee:
                     
                     return False, temp_pc
                 
-                # for bitwise XOR
+                # for bitwise XOR | working, has been tested
                 if instruction[0:5] == '01010':
-                    BinaryXOR=int(rf.registers[regA]) ^ int(rf.registers[regB])
+                    BinaryXOR=bin_to_int(rf.registers[regA]) ^ bin_to_int(rf.registers[regB])
+                    BinaryXOR=str(int_to_bin(BinaryXOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryXOR) > 16: #overflow
@@ -96,9 +97,10 @@ class ee:
                     
                     return False, temp_pc
                 
-                # for bitwise OR
+                # for bitwise OR | working, has been tested
                 if instruction[0:5] == '01011':
-                    Binary0R=int(rf.registers[regA]) | int(rf.registers[regB])
+                    BinaryXOR=bin_to_int(rf.registers[regA]) | bin_to_int(rf.registers[regB])
+                    BinaryXOR=str(int_to_bin(BinaryXOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryOR) > 16: #overflow
@@ -116,7 +118,8 @@ class ee:
                 
                 # for bitwise AND
                 if instruction[0:5] == '01100':
-                    BinaryAND=int(rf.registers[regA]) & int(rf.registers[regB])
+                    BinaryXOR=bin_to_int(rf.registers[regA]) & bin_to_int(rf.registers[regB])
+                    BinaryXOR=str(int_to_bin(BinaryXOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryAND) > 16: #overflow
@@ -135,10 +138,10 @@ class ee:
 
              #-----------------------type B--------------------------------
             if instruction[0:5] in opcodes.op_codes_B:
-                regA = instruction[6:]
+                regA = instruction[6:9]
                 Imm=instruction[9:16]
 
-                # for move immediate
+                # for move immediate // working, has been tested
                 if instruction[0:5]=='00010':
 
                     Imm=int(Imm)
@@ -147,49 +150,47 @@ class ee:
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
-                # for right shift
+                # for right shift // tested, working
                 if instruction[0:5]=='01000':
 
-                    Imm=bin_to_int(int(Imm))
-                    
-                    temp=int(rf.registers[regA]) >> Imm
-                    temp=str(temp).zfill(16)#this zfills thingy actually works?
+                    Imm=bin_to_int(Imm) 
+                    temp=rf.registers[regA]
+                    temp='0'*Imm+temp[:-Imm]
+                    temp=temp.zfill(16)# not really required, but still- no harm in being careful
                     regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
-                # for left shift
-                if instruction[0:5]=='01010':
+                # for left shift // tested, working
+                if instruction[0:5]=='01001':
 
-                    Imm=bin_to_int(int(Imm))
-            
-                    temp=int(rf.registers[regA]) << Imm
-                    temp=str(temp).zfill(16)#this zfills thingy actually works?
+                    Imm=bin_to_int(Imm) 
+                    temp=rf.registers[regA]
+                    temp=temp[Imm:]+'0'*Imm
+                    temp=temp.zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
-                # for right rotate
+                # for right rotate | tested, working
                 if instruction[0:5]=='10011':
 
-                    Imm=bin_to_int(int(Imm))
-                    
+                    Imm=bin_to_int(Imm)
+                    temp=rf.registers[regA]
                     bits=rf.registers[regA][-Imm:]
-                    temp=int(rf.registers[regA]) >> Imm
-                    temp=bits[::-1]+str(temp)
+                    temp=bits+temp[:-Imm]
                     temp=temp.zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
-                # for left rotate
-                if instruction[0:5]=='10011':
+                # for left rotate| tested, working
+                if instruction[0:5]=='10100':
 
-                    Imm=bin_to_int(int(Imm))
-                    
+                    Imm=bin_to_int(Imm)
+                    temp=rf.registers[regA]
                     bits=rf.registers[regA][:Imm]
-                    temp=int(rf.registers[regA]) << Imm
-                    temp=str(temp)+bits
+                    temp=temp[Imm:]+bits
                     temp=temp.zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
