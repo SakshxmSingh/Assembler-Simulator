@@ -58,7 +58,7 @@ class ee:
                     BinaryDifference = BinaryDifference.zfill(16)
                     regData.writeData(opcodes.regs[destination], BinaryDifference)
                     
-                    
+
                     return False, temp_pc
 
                 # for multiplication
@@ -135,7 +135,7 @@ class ee:
 
              #-----------------------type B--------------------------------
             if instruction[0:5] in opcodes.op_codes_B:
-                regA = instruction[7:9]
+                regA = instruction[6:9]
                 Imm=instruction[9:16]
 
                 # for move immediate
@@ -160,6 +160,17 @@ class ee:
                 
                 # for left shift
                 if instruction[0:5]=='01010':
+
+                    Imm=bin_to_int(int(Imm))
+    
+                    regA=regA << Imm
+                    regA=regA.zfill(16)#this zfills thingy actually works?
+                    regData.writeData(opcodes.regs[regA],regA)
+                    temp_pc = progCount.pc+1
+                    return False, temp_pc
+                
+                # for right rotate
+                if instruction[0:5]=='10011':
 
                     Imm=bin_to_int(int(Imm))
     
