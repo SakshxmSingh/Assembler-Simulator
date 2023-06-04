@@ -135,14 +135,14 @@ class ee:
 
              #-----------------------type B--------------------------------
             if instruction[0:5] in opcodes.op_codes_B:
-                regA = instruction[6:9]
+                regA = instruction[6:]
                 Imm=instruction[9:16]
 
                 # for move immediate
                 if instruction[0:5]=='00010':
 
                     Imm=int(Imm)
-                    Imm=Imm.zfill(16)#this zfills thingy actually works?
+                    Imm=str(Imm).zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],Imm)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
@@ -151,10 +151,10 @@ class ee:
                 if instruction[0:5]=='01000':
 
                     Imm=bin_to_int(int(Imm))
-    
-                    regA=regA >> Imm
-                    regA=regA.zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],regA)
+                    
+                    temp=int(rf.registers[regA]) >> Imm
+                    temp=str(temp).zfill(16)#this zfills thingy actually works?
+                    regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
@@ -162,10 +162,10 @@ class ee:
                 if instruction[0:5]=='01010':
 
                     Imm=bin_to_int(int(Imm))
-    
-                    regA=regA << Imm
-                    regA=regA.zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],regA)
+            
+                    temp=int(rf.registers[regA]) << Imm
+                    temp=str(temp).zfill(16)#this zfills thingy actually works?
+                    regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
@@ -173,13 +173,27 @@ class ee:
                 if instruction[0:5]=='10011':
 
                     Imm=bin_to_int(int(Imm))
-    
-                    regA=regA << Imm
-                    regA=regA.zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],regA)
+                    
+                    bits=rf.registers[regA][-Imm:]
+                    temp=int(rf.registers[regA]) >> Imm
+                    temp=bits[::-1]+str(temp)
+                    temp=temp.zfill(16)#this zfills thingy actually works?
+                    regData.writeData(opcodes.regs[regA],temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
+                # for left rotate
+                if instruction[0:5]=='10011':
+
+                    Imm=bin_to_int(int(Imm))
+                    
+                    bits=rf.registers[regA][:Imm]
+                    temp=int(rf.registers[regA]) << Imm
+                    temp=str(temp)+bits
+                    temp=temp.zfill(16)#this zfills thingy actually works?
+                    regData.writeData(opcodes.regs[regA],temp)
+                    temp_pc = progCount.pc+1
+                    return False, temp_pc
 
 
             #------------------------type C-------------------------------
