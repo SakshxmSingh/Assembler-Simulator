@@ -58,6 +58,7 @@ class ee:
                     BinaryDifference = BinaryDifference.zfill(16)
                     regData.writeData(opcodes.regs[destination], BinaryDifference)
                     
+                    
                     return False, temp_pc
 
                 # for multiplication
@@ -66,7 +67,7 @@ class ee:
                     BinaryMult = int_to_bin(IntegerMult)
 
                     temp_pc = progCount.pc+1
-                    
+
                     if len(BinaryMult) > 16: #overflow
                         rf.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
@@ -109,6 +110,8 @@ class ee:
                     regData.writeData(opcodes.regs[destination], BinaryOR)
                     
                     temp_pc = progCount.pc+1
+
+
                     return False, temp_pc
                 
                 # for bitwise AND
