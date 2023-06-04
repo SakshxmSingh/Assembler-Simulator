@@ -32,8 +32,8 @@ class ee:
                     #need to set for overflow flags and errors, but basic structure gonna be like this
                     BinarySum = int_to_bin(IntegerSum)
 
-                    if len(binarySum) > 16: #overflow
-                        rf.registers[flag][-4] = '1'
+                    if len(BinarySum) > 16: #overflow
+                        rf.registers['FLAGS'][-4] = '1'
                         regData.writeData('R1', '0000000000000000')
                         # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
@@ -52,7 +52,7 @@ class ee:
                     BinaryDifference = int_to_bin(IntegerDifference)
 
                     if len(BinaryDifference) > 16: #overflow
-                        rf.registers[flag][-4] = '1'
+                        rf.registers['FLAGS'][-4] = '1'
                         regData.writeData('R1', '0000000000000000')
                         # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
@@ -70,8 +70,8 @@ class ee:
                     #need to set for overflow flags and errors, but basic structure gonna be like this
                     BinaryMult = int_to_bin(IntegerMult)
 
-                    if len(binaryMult) > 16: #overflow
-                        rf.registers[flag][-4] = '1'
+                    if len(BinaryMult) > 16: #overflow
+                        rf.registers['FLAGS'][-4] = '1'
                         regData.writeData('R1', '0000000000000000')
                         # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
@@ -85,8 +85,8 @@ class ee:
                 # for bitwise XOR
                 if instruction[0:5] == '01010':
                     BinaryXOR=int(rf.registers[regA]) ^ int(rf.registers[regB])
-                    if len(binaryXOR) > 16: #overflow
-                        rf.registers[flag][-4] = '1'
+                    if len(BinaryXOR) > 16: #overflow
+                        rf.registers['FLAGS'][-4] = '1'
                         regData.writeData('R1', '0000000000000000')
                         # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
@@ -100,8 +100,8 @@ class ee:
                 # for bitwise OR
                 if instruction[0:5] == '01011':
                     Binary0R=int(rf.registers[regA]) | int(rf.registers[regB])
-                    if len(binaryOR) > 16: #overflow
-                        rf.registers[flag][-4] = '1'
+                    if len(BinaryOR) > 16: #overflow
+                        rf.registers['FLAGS'][-4] = '1'
                         regData.writeData('R1', '0000000000000000')
                         # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
@@ -115,8 +115,8 @@ class ee:
                 # for bitwise AND
                 if instruction[0:5] == '01100':
                     BinaryAND=int(rf.registers[regA]) & int(rf.registers[regB])
-                    if len(binaryAND) > 16: #overflow
-                        rf.registers[flag][-4] = '1'
+                    if len(BinaryAND) > 16: #overflow
+                        rf.registers['FLAGS'][-4] = '1'
                         regData.writeData('R1', '0000000000000000')
                         # return statement for when flag is set isn't written yet, program counter also needs to be updated
 
