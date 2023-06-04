@@ -1,4 +1,4 @@
-def dec_to_bin_FI(decimal):
+def dec_to_bin_FI(decimal): # TAKES IN DECIMAL INPUT GIVES OUT BINARY OUTPUT
      # DECIMAL TO BINARY CONVERSION
 
     # Separating the whole number and fractional part of the decimal
@@ -21,7 +21,7 @@ def dec_to_bin_FI(decimal):
     #print("bin",binary)
     return binary
 
-def findM_FI(decimal):
+def findM_FI(decimal): # TAKES IN DECIMAL INPUT GIVES OUT THE MANTISAA OD THAT DECIMAL INPUT
     binary = dec_to_bin_FI(decimal)
 
     # findinf position of 1 and the dot
@@ -53,7 +53,7 @@ def findM_FI(decimal):
     # print("the mantissa is",M)
     return M
 
-def findE_FI(decimal):
+def findE_FI(decimal): # TAKES DECIMAL INPUT AND GIVES OUT EXPONENT (IEEE) FOR IT AS OUTPUT
     binary = dec_to_bin_FI(decimal)
 
     dotref = binary.find(".")
@@ -80,7 +80,7 @@ def findE_FI(decimal):
     
     return E
 
-def findIEEE_FI(decimal):
+def findIEEE_FI(decimal): # TAKES IN DECIMAL INPUT ANF GIVES OUT ITS 8 BIT ieee REPRESENTATION
 
     M = findM_FI(decimal)
     E = findE_FI(decimal)
@@ -91,7 +91,7 @@ def findIEEE_FI(decimal):
 # IEEE = findIEEE_FI(decimal)
 # print(IEEE)
 
-def findE_IF(IEEE):
+def findE_IF(IEEE): # TAKES IN IEEE FORM AND GIVES OUT THE EXPONENT
     E = IEEE[:3]
     E = int(E,2)
     E = E - 3
@@ -99,7 +99,7 @@ def findE_IF(IEEE):
     return E
     
 
-def findbin_IF(IEEE):
+def findbin_IF(IEEE): # TAKES IEEE FORM AND GIVES OUT THE BINARY FORM
     E = findE_IF(IEEE)
     M = IEEE[3:]
     P = "1."+M
@@ -122,7 +122,7 @@ def findbin_IF(IEEE):
     #print(binval)
     return binval
 
-def bin_to_dec_IF(IEEE):
+def bin_to_dec_IF(IEEE): # TAKES THE IEEE FORM AND GIVES OUT THE DECIMAL FORM
     binval = findbin_IF(IEEE)
     dotref = binval.find(".")
     fracpart = binval[dotref+1:]
