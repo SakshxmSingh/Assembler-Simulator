@@ -19,4 +19,4 @@ class rf:
 
     def dump(self):
         for i in self.registers:
-            print(self.registers[i])
+            print(self.registers[i], end=' ')

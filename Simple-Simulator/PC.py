@@ -7,6 +7,6 @@ class pc:
         self.pc = new_pc
 
     def dump(self):
-        print(self.pc)
+        print(self.pc, end=' ')
     
     
