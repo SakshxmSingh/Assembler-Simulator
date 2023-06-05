@@ -1,4 +1,5 @@
 import sys
+from CONVERTME import findIEEE_FI, bin_to_dec_IF
 
 #-------------start----------------------------------------------------------------------------------
 
@@ -170,20 +171,19 @@ def label_read(line):
         elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
             print("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
             assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
-        if line[2][1:].isdigit() ==False:
-            print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
-        binary = bin(int(line[2][1:])).replace("0b", "")
-        # I have ignored the case where they give negative number as input.
-        if len(binary) > 7:
-            print("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
 
-        else:
-            if len(binary) == 7:
-                pass
-            elif len(binary) < 7:
-                binary = (7 - len(binary))*"0" + binary
+
+        # typeB for floating
+        if line[0] == 'movf':
+            if line[2][1:].isfloat() == False:
+                print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+            
+            if (float(line[2][1:]) > 15.75 or float(line[2][1:]) < 0.25) and (float(line[2][1:]) != 0):
+                print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+
+            binary = findIEEE_FI(line[2][1:])
 
             if line[1] not in regs:
                 print("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
@@ -191,10 +191,36 @@ def label_read(line):
             elif line[1] == "FLAGS":
                 print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
-            string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
-            string = string[0:4]  + string[4:8]  + string[8:12]  + string[12:16] #" Type B" + " " + 
-                # line[0] + " " + line[1] + " " + line[2]
+            string = op_codes_B[line[0]] + regs[line[1]] + binary
             output_list.append(string)
+
+
+        else:
+            if line[2][1:].isdigit() ==False:
+                print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+            binary = bin(int(line[2][1:])).replace("0b", "")
+            # I have ignored the case where they give negative number as input.
+            if len(binary) > 7:
+                print("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
+
+            else:
+                if len(binary) == 7:
+                    pass
+                elif len(binary) < 7:
+                    binary = (7 - len(binary))*"0" + binary
+
+                if line[1] not in regs:
+                    print("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+                elif line[1] == "FLAGS":
+                    print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+                string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
+                string = string[0:4]  + string[4:8]  + string[8:12]  + string[12:16] #" Type B" + " " + 
+                    # line[0] + " " + line[1] + " " + line[2]
+                output_list.append(string)
 
     # type C, errors handled
     elif line[0] in op_codes_C:
@@ -371,41 +397,65 @@ def output_func(line):
     # type B, error handling done :)
     # this sorts the mov problem by checking reg or $imm
     elif (line[0] in op_codes_B) and (line[2][0] == "$") :
+            
+            if len(line) > 3:
+                print("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
+            if len(line) < 3:
+                print("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
+            elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
+                print("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
+                assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
 
-        if len(line) > 3:
-            print("Syntax Error: You have entered in more inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Syntax Error: You have entered in more inputs than required for this opcode.  (line {input_list.index(line)+1})"
-        if len(line) < 3:
-            print("Syntax Error: You have entered lesser inputs than required for this opcode. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Syntax Error: You have entered lesser inputs than required for this opcode. (line {input_list.index(line)+1})"
-        elif (line[2][0] != "$" ) and (line[2][1:].isdigit()):
-            print("Syntax Error: Wrong format for immediate values used. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Syntax Error: Wrong format for immediate values used. (line {input_list.index(line)+1})"
-        if line[2][1:].isdigit() ==False:
-            print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
-        binary = bin(int(line[2][1:])).replace("0b", "")
-        # I have ignored the case where they give negative number as input.
-        if len(binary) > 7:
-            print("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
-            assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
 
-        else:
-            if len(binary) == 7:
-                pass
-            elif len(binary) < 7:
-                binary = (7 - len(binary))*"0" + binary
+            # typeB for floating
+            if line[0] == 'movf':
+                if line[2][1:].isfloat() == False:
+                    print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+                
+                if (float(line[2][1:]) > 15.75 or float(line[2][1:]) < 0.25) and (float(line[2][1:]) != 0):
+                    print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
 
-            if line[1] not in regs:
-                print("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
-                assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
-            elif line[1] == "FLAGS":
-                print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
-                assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
-            string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
-            string = string[0:4]  + string[4:8]  + string[8:12]  + string[12:16] #+ " Type B" + " " + \
-                #line[0] + " " + line[1] + " " + line[2]
-            output_list.append(string)
+                binary = findIEEE_FI(line[2][1:])
+
+                if line[1] not in regs:
+                    print("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+                elif line[1] == "FLAGS":
+                    print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+                string = op_codes_B[line[0]] + regs[line[1]] + binary
+                output_list.append(string)
+
+            else:
+                if line[2][1:].isdigit() ==False:
+                    print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
+                binary = bin(int(line[2][1:])).replace("0b", "")
+                # I have ignored the case where they give negative number as input.
+                if len(binary) > 7:
+                    print("Illegal immediate values(more than 7 bits). (line"+ str(input_list.index(line)+1)+ ")")
+                    assert 0 == 1, f"Illegal immediate values(more than 7 bits). (line {input_list.index(line)+1})"
+
+                else:
+                    if len(binary) == 7:
+                        pass
+                    elif len(binary) < 7:
+                        binary = (7 - len(binary))*"0" + binary
+
+                    if line[1] not in regs:
+                        print("Invalid register name or some typo in register name. (line"+ str(input_list.index(line)+1)+ ")")
+                        assert 0 == 1, f"Invalid register name or some typo in register name. (line {input_list.index(line)+1})"
+                    elif line[1] == "FLAGS":
+                        print("Illegal access to FLAGS register. (line"+ str(input_list.index(line)+1)+ ")")
+                        assert 0 == 1, f"Illegal access to FLAGS register. (line {input_list.index(line)+1})"
+                    string = op_codes_B[line[0]] + '0' + (regs[line[1]]) + binary
+                    string = string[0:4]  + string[4:8]  + string[8:12]  + string[12:16] #" Type B" + " " + 
+                        # line[0] + " " + line[1] + " " + line[2]
+                    output_list.append(string)
 
     # type C, errors handled
     elif line[0] in op_codes_C:
