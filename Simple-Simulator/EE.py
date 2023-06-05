@@ -1,5 +1,5 @@
 import opcodes
-from CONVERTME import int_to_bin, bin_to_int
+from CONVERTME import int_to_bin, bin_to_int, bin_to_dec_IF, findIEEE_FI
 from main import progCount
 from main import regData
 from main import memData
@@ -27,13 +27,13 @@ class ee:
                 
                 # for addition
                 if instruction[0:5] == '00000':
-                    IntegerSum = bin_to_int(int(rf.registers[regA])) + int(bin_to_int(rf.registers[regB])) 
+                    IntegerSum = bin_to_int((regData.registers[regA])) + (bin_to_int(regData.registers[regB])) 
                     BinarySum = int_to_bin(IntegerSum)
                     
                     temp_pc = progCount.pc+1
 
                     if len(BinarySum) > 16: #overflow
-                        rf.registers['FLAGS'][-4] = '1'
+                        regData.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
     
@@ -45,16 +45,15 @@ class ee:
                 
                 # for subtraction
                 if instruction[0:5] == '00001':
-                    IntegerDifference = bin_to_int(int(rf.registers[regA])) - int(bin_to_int(rf.registers[regB])) 
-                    BinaryDifference = int_to_bin(IntegerDifference)
-
+                    IntegerDifference = bin_to_int((regData.registers[regA])) - (bin_to_int(regData.registers[regB]))
                     temp_pc = progCount.pc+1
 
-                    if len(BinaryDifference) > 16: #overflow
-                        rf.registers['FLAGS'][-4] = '1'
+                    if IntegerDifference < 0:
+                        regData.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
-    
+
+                    BinaryDifference = int_to_bin(IntegerDifference)
                     BinaryDifference = BinaryDifference.zfill(16)
                     regData.writeData(opcodes.regs[destination], BinaryDifference)
                     
@@ -63,13 +62,13 @@ class ee:
 
                 # for multiplication
                 if instruction[0:5] == '00110':
-                    IntegerMult = bin_to_int(int(rf.registers[regA])) * int(bin_to_int(rf.registers[regB])) 
+                    IntegerMult = bin_to_int((regData.registers[regA])) * (bin_to_int(regData.registers[regB])) 
                     BinaryMult = int_to_bin(IntegerMult)
 
                     temp_pc = progCount.pc+1
 
                     if len(BinaryMult) > 16: #overflow
-                        rf.registers['FLAGS'][-4] = '1'
+                        regData.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -82,12 +81,12 @@ class ee:
                 
                 # for bitwise XOR | working, has been tested
                 if instruction[0:5] == '01010':
-                    BinaryXOR=bin_to_int(rf.registers[regA]) ^ bin_to_int(rf.registers[regB])
+                    BinaryXOR=bin_to_int(regData.registers[regA]) ^ bin_to_int(regData.registers[regB])
                     BinaryXOR=str(int_to_bin(BinaryXOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryXOR) > 16: #overflow
-                        rf.registers['FLAGS'][-4] = '1'
+                        regData.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
     
@@ -99,31 +98,28 @@ class ee:
                 
                 # for bitwise OR | working, has been tested
                 if instruction[0:5] == '01011':
-                    BinaryXOR=bin_to_int(rf.registers[regA]) | bin_to_int(rf.registers[regB])
-                    BinaryXOR=str(int_to_bin(BinaryXOR))
+                    BinaryOR=bin_to_int(regData.registers[regA]) | bin_to_int(regData.registers[regB])
+                    BinaryOR=str(int_to_bin(BinaryXOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryOR) > 16: #overflow
-                        rf.registers['FLAGS'][-4] = '1'
+                        regData.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
     
                     BinaryOR= BinaryOR.zfill(16)
                     regData.writeData(opcodes.regs[destination], BinaryOR)
-                    
-                    temp_pc = progCount.pc+1
-
 
                     return False, temp_pc
                 
                 # for bitwise AND
                 if instruction[0:5] == '01100':
-                    BinaryXOR=bin_to_int(rf.registers[regA]) & bin_to_int(rf.registers[regB])
-                    BinaryXOR=str(int_to_bin(BinaryXOR))
+                    BinaryAND=bin_to_int(regData.registers[regA]) & bin_to_int(regData.registers[regB])
+                    BinaryAND=str(int_to_bin(BinaryXOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryAND) > 16: #overflow
-                        rf.registers['FLAGS'][-4] = '1'
+                        regData.registers['FLAGS'][-4] = '1'
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -132,6 +128,36 @@ class ee:
                     regData.writeData(opcodes.regs[destination], BinaryAND)
                     
                     
+                    return False, temp_pc
+                
+                # for fraction addition
+                if instruction[0:5]=='10000':
+                    FractionSum = bin_to_dec_IF(regData.registers[regA][8:]) + bin_to_dec_IF(regData.registers[regB][8:])
+                    temp_pc = progCount.pc+1
+
+                    if FractionSum > 15.75:
+                        regData.registers['FLAGS'][-4] = '1'
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
+
+                    BinarySum = findIEEE_FI(FractionSum)
+                    BinarySum = BinarySum.zfill(16)
+                    regData.writeData(opcodes.regs[destination], BinarySum)
+                    return False, temp_pc
+                
+                # for fraction subtraction
+                if instruction[0:5]=='10001':
+                    FractionDifference = bin_to_dec_IF(regData.registers[regA][8:]) - bin_to_dec_IF(regData.registers[regB][8:])
+                    temp_pc = progCount.pc+1
+
+                    if FractionDifference < 0.25 and FractionDifference!=0:
+                        regData.registers['FLAGS'][-4] = '1'
+                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        return False, temp_pc
+
+                    BinaryDifference = findIEEE_FI(FractionDifference)
+                    BinaryDifference = BinaryDifference.zfill(16)
+                    regData.writeData(opcodes.regs[destination], BinaryDifference)
                     return False, temp_pc
                 
 
@@ -144,8 +170,15 @@ class ee:
                 # for move immediate // working, has been tested
                 if instruction[0:5]=='00010':
 
-                    Imm=int(Imm)
-                    Imm=str(Imm).zfill(16)#this zfills thingy actually works?
+                    Imm=(Imm).zfill(16)#this zfills thingy actually works?
+                    regData.writeData(opcodes.regs[regA],Imm)
+                    temp_pc = progCount.pc+1
+                    return False, temp_pc
+                
+                #movf
+                if instruction[0:5]=='10010':
+                    Imm=instruction[8:16]
+                    Imm=Imm.zfill(16)
                     regData.writeData(opcodes.regs[regA],Imm)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
@@ -154,7 +187,7 @@ class ee:
                 if instruction[0:5]=='01000':
 
                     Imm=bin_to_int(Imm) 
-                    temp=rf.registers[regA]
+                    temp=regData.registers[regA]
                     temp='0'*Imm+temp[:-Imm]
                     temp=temp.zfill(16)# not really required, but still- no harm in being careful
                     regData.writeData(opcodes.regs[regA],temp)
@@ -165,7 +198,7 @@ class ee:
                 if instruction[0:5]=='01001':
 
                     Imm=bin_to_int(Imm) 
-                    temp=rf.registers[regA]
+                    temp=regData.registers[regA]
                     temp=temp[Imm:]+'0'*Imm
                     temp=temp.zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],temp)
@@ -176,8 +209,8 @@ class ee:
                 if instruction[0:5]=='10110':
 
                     Imm=bin_to_int(Imm)
-                    temp=rf.registers[regA]
-                    bits=rf.registers[regA][-Imm:]
+                    temp=regData.registers[regA]
+                    bits=regData.registers[regA][-Imm:]
                     temp=bits+temp[:-Imm]
                     temp=temp.zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],temp)
@@ -188,8 +221,8 @@ class ee:
                 if instruction[0:5]=='10111':
 
                     Imm=bin_to_int(Imm)
-                    temp=rf.registers[regA]
-                    bits=rf.registers[regA][:Imm]
+                    temp=regData.registers[regA]
+                    bits=regData.registers[regA][:Imm]
                     temp=temp[Imm:]+bits
                     temp=temp.zfill(16)#this zfills thingy actually works?
                     regData.writeData(opcodes.regs[regA],temp)
