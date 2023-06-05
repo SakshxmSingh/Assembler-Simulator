@@ -43,11 +43,11 @@ The following additional instructions are added:
 
 | S.No | Op Code | Instruction | Description | Syntax | Type |
 | ---- | ------- | ----------- | ----------- | ------ | ---- |
-| 1.   | 10000   | Make Bit 0  | Make bit $Imm of reg1 to value 0, where $Imm is a 4 bit value | bcf_reg1_$Imm | G
-| 2.   | 10001   | Make Bit 1  | Make bit $Imm of reg1 to value 1, where $Imm is a 4 bit value | bsf_reg1_$Imm | G
-| 3.   | 10010   | Swap  | Swap the values of reg1 and reg2 | swapf_reg1_reg2 | C
-| 4.   | 10011   | Rotate Right  | Right rotate the value stored in reg1 by $Imm times, where $Imm is a 7 bit value| rrf_reg1_$Imm | B
-| 5.   | 10100   | Rotate Left   |  Left rotate the value stored in reg1 by $Imm times, where $Imm is a 7 bit value| rlf_reg1_$Imm | B
+| 1.   | 10011   | Make Bit 0  | Make bit $Imm of reg1 to value 0, where $Imm is a 4 bit value | bcf_reg1_$Imm | G
+| 2.   | 10100   | Make Bit 1  | Make bit $Imm of reg1 to value 1, where $Imm is a 4 bit value | bsf_reg1_$Imm | G
+| 3.   | 10101   | Swap  | Swap the values of reg1 and reg2 | swapf_reg1_reg2 | C
+| 4.   | 10110   | Rotate Right  | Right rotate the value stored in reg1 by $Imm times, where $Imm is a 7 bit value| rrf_reg1_$Imm | B
+| 5.   | 10111   | Rotate Left   |  Left rotate the value stored in reg1 by $Imm times, where $Imm is a 7 bit value| rlf_reg1_$Imm | B
 
 The above opcodes are taken from the PIC16F84A micro-controller assembly
 

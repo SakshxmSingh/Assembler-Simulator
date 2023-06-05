@@ -173,7 +173,7 @@ class ee:
                     return False, temp_pc
                 
                 # for right rotate | tested, working
-                if instruction[0:5]=='10011':
+                if instruction[0:5]=='10110':
 
                     Imm=bin_to_int(Imm)
                     temp=rf.registers[regA]
@@ -185,7 +185,7 @@ class ee:
                     return False, temp_pc
 
                 # for left rotate| tested, working
-                if instruction[0:5]=='10100':
+                if instruction[0:5]=='10111':
 
                     Imm=bin_to_int(Imm)
                     temp=rf.registers[regA]
@@ -253,7 +253,7 @@ class ee:
                     temp_pc = progCount + 1
                     return False, temp_pc
 
-                elif instruction[0:5] == '10010':
+                elif instruction[0:5] == '10101':
                     reg1Value = regData.fetchData(opreg1)
                     reg2Value = regData.fetchData(opreg2)
                     regData.writeData(opreg1, reg2Value)
