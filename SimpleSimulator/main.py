@@ -322,14 +322,14 @@ class ee:
                 workingMemAddr = bin_to_int(instruction[9:16])
 
                 if instruction[0:5] == '00100':
-                    value = memData.fetchData(workingMemAddr)
+                    value = progMem.fetchData(workingMemAddr)
                     regData.writeData(workingReg, value)
                     temp_pc = progCount.pc + 1
                     return False, False, temp_pc 
                 
                 elif instruction[0:5] == '00101':
                     value = regData.fetchData(workingReg)
-                    memData.writeData(workingMemAddr, value)
+                    progMem.writeData(workingMemAddr, value)
                     temp_pc = progCount.pc + 1
                     return False, False, temp_pc
 
@@ -413,7 +413,6 @@ progMem.initialize(sys.stdin.readlines()) # Load memory from stdin
 
 progCount = pc() # Create PC object
 regData = rf() # Create RF object
-memData = mem() # Create memory object for Type D ops
 
 flag_Update = False
 halted = False
