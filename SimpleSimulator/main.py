@@ -294,18 +294,22 @@ class ee:
                         flag[14] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
+                        temp_pc = progCount.pc + 1
+                        return False, True, temp_pc
                     elif reg1Value < reg2Value:
                         flag = list(regData.registers['FLAGS'])
                         flag[13] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
+                        temp_pc = progCount.pc + 1
+                        return False, True, temp_pc
                     elif reg1Value == reg2Value:
                         flag = list(regData.registers['FLAGS'])
                         flag[15] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
-                    temp_pc = progCount.pc + 1
-                    return False, True, temp_pc
+                        temp_pc = progCount.pc + 1
+                        return False, True, temp_pc
 
                 elif instruction[0:5] == '10101':
                     reg1Value = regData.fetchData(opreg1)
