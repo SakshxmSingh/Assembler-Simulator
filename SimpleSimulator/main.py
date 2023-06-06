@@ -6,6 +6,16 @@ import opcodes
 from CONVERTME import int_to_bin, bin_to_int, bin_to_dec_IF, findIEEE_FI
 # from EE import ee
 
+
+'''
+---------------------------------------------------------------------------------
+
+EXECUTION ENGINE
+
+---------------------------------------------------------------------------------
+
+'''
+
 class ee:
     def execute(instruction):
         #type F
