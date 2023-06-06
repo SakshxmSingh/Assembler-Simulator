@@ -33,11 +33,11 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
     
                     BinarySum = BinarySum.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinarySum)
+                    regData.writeData(destination, BinarySum)
                     
                     
                     return False, temp_pc
@@ -51,12 +51,12 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
 
                     BinaryDifference = int_to_bin(IntegerDifference)
                     BinaryDifference = BinaryDifference.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinaryDifference)
+                    regData.writeData(destination, BinaryDifference)
                     
 
                     return False, temp_pc
@@ -72,12 +72,12 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
 
     
                     BinaryMult= BinaryMult.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinaryMult)
+                    regData.writeData(destination, BinaryMult)
                     
                     
                     return False, temp_pc
@@ -92,11 +92,11 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
     
                     BinaryXOR= BinaryXOR.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinaryXOR)
+                    regData.writeData(destination, BinaryXOR)
                     
                     
                     return False, temp_pc
@@ -111,11 +111,11 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
     
                     BinaryOR= BinaryOR.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinaryOR)
+                    regData.writeData(destination, BinaryOR)
 
                     return False, temp_pc
                 
@@ -129,12 +129,12 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
 
     
                     BinaryAND= BinaryAND.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinaryAND)
+                    regData.writeData(destination, BinaryAND)
                     
                     
                     return False, temp_pc
@@ -148,12 +148,12 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
 
                     BinarySum = findIEEE_FI(FractionSum)
                     BinarySum = BinarySum.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinarySum)
+                    regData.writeData(destination, BinarySum)
                     return False, temp_pc
                 
                 # for fraction subtraction
@@ -165,12 +165,12 @@ class ee:
                         flag = regData.registers['FLAGS'].split()
                         flag[-4] = '1'
                         regData.registers['FLAGS'] = ''.join(flag)
-                        regData.writeData(opcodes.regs[destination], '0000000000000000')
+                        regData.writeData(destination, '0000000000000000')
                         return False, temp_pc
 
                     BinaryDifference = findIEEE_FI(FractionDifference)
                     BinaryDifference = BinaryDifference.zfill(16)
-                    regData.writeData(opcodes.regs[destination], BinaryDifference)
+                    regData.writeData(destination, BinaryDifference)
                     return False, temp_pc
                 
 
@@ -183,7 +183,7 @@ class ee:
                 if instruction[0:5]=='00010':
 
                     Imm=(Imm).zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],Imm)
+                    regData.writeData(regA,Imm)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
@@ -191,7 +191,7 @@ class ee:
                 if instruction[0:5]=='10010':
                     Imm=instruction[8:16]
                     Imm=Imm.zfill(16)
-                    regData.writeData(opcodes.regs[regA],Imm)
+                    regData.writeData(regA,Imm)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
@@ -202,7 +202,7 @@ class ee:
                     temp=regData.registers[regA]
                     temp='0'*Imm+temp[:-Imm]
                     temp=temp.zfill(16)# not really required, but still- no harm in being careful
-                    regData.writeData(opcodes.regs[regA],temp)
+                    regData.writeData(regA,temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
@@ -213,7 +213,7 @@ class ee:
                     temp=regData.registers[regA]
                     temp=temp[Imm:]+'0'*Imm
                     temp=temp.zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],temp)
+                    regData.writeData(regA,temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
                 
@@ -225,7 +225,7 @@ class ee:
                     bits=regData.registers[regA][-Imm:]
                     temp=bits+temp[:-Imm]
                     temp=temp.zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],temp)
+                    regData.writeData(regA,temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
@@ -237,7 +237,7 @@ class ee:
                     bits=regData.registers[regA][:Imm]
                     temp=temp[Imm:]+bits
                     temp=temp.zfill(16)#this zfills thingy actually works?
-                    regData.writeData(opcodes.regs[regA],temp)
+                    regData.writeData(regA,temp)
                     temp_pc = progCount.pc+1
                     return False, temp_pc
 
@@ -392,7 +392,7 @@ class ee:
                     regvalue = regvalue[:-imm] + "0" + regvalue[-imm+1:]
                     regData.writeData(regaddr, regvalue)
 
-                    
+
                     
 
 '''
