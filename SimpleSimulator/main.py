@@ -17,9 +17,9 @@ class ee:
             
             #-----------------------type A--------------------------------
             if instruction[0:5] in opcodes.op_codes_A:
-                regA = instruction[10:13]
-                regB = instruction[13:16]
-                destination = instruction[7:10]
+                regA = opcodes.regs[instruction[10:13]]
+                regB = opcodes.regs[instruction[13:16]]
+                destination = opcodes.regs[instruction[7:10]]
 
                 
                 # for addition
@@ -160,7 +160,7 @@ class ee:
 
              #-----------------------type B--------------------------------
             if instruction[0:5] in opcodes.op_codes_B:
-                regA = instruction[6:9]
+                regA = opcodes.regs[instruction[6:9]]
                 Imm=instruction[9:16]
 
                 # for move immediate // working, has been tested
