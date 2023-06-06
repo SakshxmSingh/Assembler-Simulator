@@ -424,7 +424,6 @@ while(not halted):
     halted, flag_Update, new_PC = ee.execute(Instruction) # Update RF compute new_PC
     progCount.dump() # Print PC
     regData.dump() # Print RF state
-    print()
     progCount.update(new_PC) # Update PC
 
 

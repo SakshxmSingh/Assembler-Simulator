@@ -8,7 +8,6 @@ class rf:
                           'R4':'0000000000000000',
                           'R5':'0000000000000000',
                           'R6':'0000000000000000',
-                          'R7':'0000000000000000',
                           'FLAGS':'0000000000000000'}
     
     def writeData(self, key, value):
@@ -19,4 +18,7 @@ class rf:
 
     def dump(self):
         for i in self.registers:
-            print(self.registers[i], end=' ')
+            if i == 'FLAGS':
+                print(self.registers[i])
+            else:
+                print(self.registers[i], end=' ')
