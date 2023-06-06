@@ -269,7 +269,7 @@ class ee:
                             value[i] = '1'
                         else:
                             value[i] = '0'
-                    regData.writeData(opreg2, value)
+                    regData.writeData(opreg1, value)
                     temp_pc = progCount.pc + 1
                     return False, temp_pc
                 
