@@ -373,3 +373,22 @@ class ee:
                     else:
                         temp_pc = progCount.pc+1
                         return False, temp_pc
+                    
+            #------------------------type G-------------------------------
+            if instruction[0:5] in opcodes.op_codes_G:
+
+                # bcf_reg1_$Imm Make Bit 0 (clear bit)
+                if instruction[0:5] == '10011':
+                    regaddr = opcodes.regs[instruction[9:12]]
+                    regvalue = str(regData.fetchData(regaddr))
+                    imm= bin_to_int(opcodes.regs[instruction[12:16]])
+                    regvalue = regvalue[:-imm] + "0" + regvalue[-imm+1:]
+                    regData.writeData(regaddr, regvalue)
+
+                # bsf_reg1_$Imm Make bit 1 (set bit)
+                if instruction[0:5] == '10100':
+                    regaddr = opcodes.regs[instruction[9:12]]
+                    regvalue = str(regData.fetchData(regaddr))
+                    imm= bin_to_int(opcodes.regs[instruction[12:16]])
+                    regvalue = regvalue[:-imm] + "0" + regvalue[-imm+1:]
+                    regData.writeData(regaddr, regvalue)
