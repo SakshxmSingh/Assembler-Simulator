@@ -33,7 +33,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinarySum) > 16: #overflow
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
     
@@ -49,7 +51,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if IntegerDifference < 0:
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -68,7 +72,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryMult) > 16: #overflow
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -86,7 +92,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryXOR) > 16: #overflow
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
     
@@ -103,7 +111,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryOR) > 16: #overflow
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
     
@@ -119,7 +129,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryAND) > 16: #overflow
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -136,7 +148,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if FractionSum > 15.75:
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -151,7 +165,9 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if FractionDifference < 0.25 and FractionDifference!=0:
-                        regData.registers['FLAGS'][-4] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[-4] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData(opcodes.regs[destination], '0000000000000000')
                         return False, temp_pc
 
@@ -244,12 +260,13 @@ class ee:
                     reg1Value = bin_to_int(regData.fetchData[opreg1])
                     reg2Value = bin_to_int(regData.fetchData[opreg2])
                     if reg2Value == 0:
-                        regData.registers['FLAGS'][12] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[12] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                         regData.writeData('R0', '0000000000000000')
                         regData.writeData('R1', '0000000000000000')
                     
                     else:
-                        regData.registers['FLAGS'][12] = '0'
                         quotient = int(reg1Value / reg2Value)
                         quotient = int_to_bin(quotient)
                         quotient = quotient.zfill(16)
@@ -277,11 +294,17 @@ class ee:
                     reg1Value = bin_to_int(regData.fetchData(opreg1))
                     reg2Value = bin_to_int(regData.fetchData(opreg2))
                     if reg1Value > reg2Value:
-                        regData.registers['FLAGS'][14] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[14] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                     elif reg1Value < reg2Value:
-                        regData.registers['FLAGS'][13] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[13] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                     elif reg1Value == reg2Value:
-                        regData.registers['FLAGS'][15] = '1'
+                        flag = regData.registers['FLAGS'].split()
+                        flag[15] = '1'
+                        regData.registers['FLAGS'] = ''.join(flag)
                     temp_pc = progCount.pc + 1
                     return False, temp_pc
 
