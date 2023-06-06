@@ -1,0 +1,11 @@
+mov R0 $0
+loop_start:
+    cmp R0 $3
+    jge else_block
+    add R0 $1
+    bsf R1 $2
+    bcf R2 $3
+    add R1 R2
+    jmp loop_start
+else_block:
+    add R1 R3
