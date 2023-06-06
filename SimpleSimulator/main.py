@@ -415,6 +415,7 @@ progCount = pc() # Create PC object
 regData = rf() # Create RF object
 memData = mem() # Create memory object for Type D ops
 
+flag_Update = False
 halted = False
 while(not halted):
     if flag_Update:
