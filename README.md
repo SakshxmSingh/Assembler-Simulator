@@ -48,6 +48,8 @@ In terminal, go to `automatedTesting` directory and enter `./run --no-sim`. A co
     - `opcodes.py` contains all the dictionaries for opcodes and registers and their binary address equivalents
     - Python programme that contains basic decimal-binary conversion functions which are used at many instances in the simulator:- `CONVERTME.py`
 
+4. **BonusTestCases**: This folder contains additional test cases for verifying the working of Q3 and Q4
+
 ## **For Q4**
 The following additional instructions are added:
 
@@ -71,7 +73,7 @@ The above opcodes are taken from the PIC16F84A micro-controller assembly
 ## **Some things to consider**
 - In case the programme reads an empty line, it is ignored in respect to giving output but it is considered in respect to incrementing the programme counter.
 - In case of any errors, the machine code doesn't get printed and the error is displayed in the terminal and the output file, as an assertion error
-- For floating point operations, standard IEEE conventions are followed for maximum and minimum values (no denormal values, neither infinity) respectively being `0.25` and `15.75`
+- For floating point operations, standard IEEE conventions are followed for maximum and minimum values (no denormal values, neither infinity), them respectively being `15.75` and `0.25`
 
 > **Current Lead Branch** -> $main$
 

@@ -2,8 +2,8 @@ def dec_to_bin_FI(decimal): # TAKES IN DECIMAL INPUT GIVES OUT BINARY OUTPUT
      # DECIMAL TO BINARY CONVERSION
 
     # Separating the whole number and fractional part of the decimal
-    whole_num = int(decimal)
-    fractional_num = decimal - whole_num
+    whole_num = int(float(decimal))
+    fractional_num = float(decimal) - whole_num
 
     # whole number part to binary
     bin_whole = bin(whole_num)[2:]
@@ -81,7 +81,8 @@ def findE_FI(decimal): # TAKES DECIMAL INPUT AND GIVES OUT EXPONENT (IEEE) FOR I
     return E
 
 def findIEEE_FI(decimal): # TAKES IN DECIMAL INPUT ANF GIVES OUT ITS 8 BIT ieee REPRESENTATION
-
+    if int(float(decimal)) == 0:
+        return "00000000"
     M = findM_FI(decimal)
     E = findE_FI(decimal)
     IEEE = E+M

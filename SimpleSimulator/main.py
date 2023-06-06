@@ -145,7 +145,7 @@ class ee:
                 
                 # for fraction addition
                 if instruction[0:5]=='10000':
-                    FractionSum = bin_to_dec_IF(regData.registers[regA][8:]) + bin_to_dec_IF(regData.registers[regB][8:])
+                    FractionSum = float(bin_to_dec_IF(regData.registers[regA][8:])) + float(bin_to_dec_IF(regData.registers[regB][8:]))
                     temp_pc = progCount.pc+1
 
                     if FractionSum > 15.75:
@@ -163,7 +163,7 @@ class ee:
                 
                 # for fraction subtraction
                 if instruction[0:5]=='10001':
-                    FractionDifference = bin_to_dec_IF(regData.registers[regA][8:]) - bin_to_dec_IF(regData.registers[regB][8:])
+                    FractionDifference = float(bin_to_dec_IF(regData.registers[regA][8:])) - float(bin_to_dec_IF(regData.registers[regB][8:]))
                     temp_pc = progCount.pc+1
 
                     if FractionDifference < 0.25 and FractionDifference!=0:
@@ -180,7 +180,7 @@ class ee:
                     return False, False, temp_pc
                 
 
-             #-----------------------type B--------------------------------
+            #-----------------------type B--------------------------------
             if instruction[0:5] in opcodes.op_codes_B:
                 regA = opcodes.regs[instruction[6:9]]
                 Imm=instruction[9:16]
@@ -195,6 +195,7 @@ class ee:
                 
                 #movf
                 if instruction[0:5]=='10010':
+                    regA = opcodes.regs[instruction[5:8]]
                     Imm=instruction[8:16]
                     Imm=Imm.zfill(16)
                     regData.writeData(regA,Imm)
@@ -391,23 +392,20 @@ class ee:
 
             #------------------------type G-------------------------------
             if instruction[0:5] in opcodes.op_codes_G:
+                regaddr = opcodes.regs[instruction[9:12]]
+                imm = bin_to_int(instruction[12:16])
+                regvalue = str(regData.fetchData(regaddr))
 
                 # bcf_reg1_$Imm Make Bit 0 (clear bit)
                 if instruction[0:5] == '10011':
-                    regaddr = opcodes.regs[instruction[9:12]]
-                    regvalue = str(regData.fetchData(regaddr))
-                    imm= bin_to_int(opcodes.regs[instruction[12:16]])
-                    regvalue = regvalue[:-imm] + "0" + regvalue[-imm+1:]
+                    regvalue = regvalue[:-imm-1] + "0" + regvalue[-imm:]
                     regData.writeData(regaddr, regvalue)
                     temp_pc = progCount.pc + 1
                     return False, False, temp_pc
 
                 # bsf_reg1_$Imm Make bit 1 (set bit)
                 if instruction[0:5] == '10100':
-                    regaddr = opcodes.regs[instruction[9:12]]
-                    regvalue = str(regData.fetchData(regaddr))
-                    imm= bin_to_int(opcodes.regs[instruction[12:16]])
-                    regvalue = regvalue[:-imm] + "0" + regvalue[-imm+1:]
+                    regvalue = regvalue[:-imm-1] + "1" + regvalue[-imm:]
                     regData.writeData(regaddr, regvalue)
                     temp_pc = progCount.pc + 1
                     return False, False, temp_pc

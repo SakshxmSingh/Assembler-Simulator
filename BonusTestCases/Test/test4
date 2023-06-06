@@ -1,0 +1,15 @@
+var meow
+var bhau
+movf R1 $15
+movf R2 $1.5
+movf R3 $0
+movf R4 $1
+label: subf R1 R1 R2
+        cmp R1 R3
+        jlt nope
+        jgt label
+        cmp R1 R3
+        je divisible
+nope:   st R4 meow
+divisible: st R3 bhau
+hlt

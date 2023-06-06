@@ -1,6 +1,13 @@
 import sys
 from CONVERTME import findIEEE_FI, bin_to_dec_IF
 
+def isfloat(num):
+    try:
+        float(num)
+        return True
+    except ValueError:
+        return False
+
 #-------------start----------------------------------------------------------------------------------
 
 op_codes_A = {
@@ -175,7 +182,7 @@ def label_read(line):
 
         # typeB for floating
         if line[0] == 'movf':
-            if line[2][1:].isfloat() == False:
+            if isfloat(line[2][1:]) == False:
                 print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
                 assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
             
@@ -411,7 +418,7 @@ def output_func(line):
 
             # typeB for floating
             if line[0] == 'movf':
-                if line[2][1:].isfloat() == False:
+                if isfloat(line[2][1:]) == False:
                     print("Immediate value not valid. (line"+ str(input_list.index(line)+1)+ ")")
                     assert 0 == 1,f"Immediate value not valid. (line {input_list.index(line)+1})"
                 
