@@ -421,10 +421,10 @@ regData = rf() # Create RF object
 flag_Update = False
 halted = False
 while(not halted):
-    if flag_Update == False:
-        regData.registers['FLAGS'] = '0000000000000000'
     Instruction = progMem.fetchData(progCount.pc); # Get current instruction
     halted, flag_Update, new_PC = ee.execute(Instruction) # Update RF compute new_PC
+    if flag_Update == False:
+        regData.registers['FLAGS'] = '0000000000000000'
     progCount.dump() # Print PC
     regData.dump() # Print RF state
     progCount.update(new_PC) # Update PC
