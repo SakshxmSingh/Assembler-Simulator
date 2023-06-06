@@ -359,7 +359,7 @@ class ee:
 
                 #jgt
                 elif instruction[0:5] == '11101':
-                    if regData.registers['FLAGS'][12] == '1':
+                    if regData.registers['FLAGS'][14] == '1':
                         temp_pc = bin_to_int(destInt)
                         return False, False, temp_pc
                     
@@ -369,7 +369,7 @@ class ee:
                 
                 #je
                 elif instruction[0:5] == '11111':
-                    if regData.registers['FLAGS'][14] == '1':
+                    if regData.registers['FLAGS'][15] == '1':
                         temp_pc = bin_to_int(destInt)
                         return False, False, temp_pc
                     
@@ -426,8 +426,8 @@ while(not halted):
     if flag_Update == False:
         regData.registers['FLAGS'] = '0000000000000000'
     progCount.dump() # Print PC
-    regData.dump() # Print RF state
     progCount.update(new_PC) # Update PC
+    regData.dump() # Print RF state
 
 
 progMem.dump() # Print the complete memory

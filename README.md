@@ -23,20 +23,30 @@ The table is from left to right
   
   
 ## **How to evaluate**
-### **For Assembler**
+In terminal, go to `automatedTesting` directory and enter `./run`. A complete report sheet will be generated in the terminal
+
+#### **For Only Assembler**
 In terminal, go to `automatedTesting` directory and enter `./run --no-sim`. A complete report sheet will be generated in the terminal
-  
 
 ## **A guide**
 
 1. **automatedTesting:** This folder contains
-    - the sample test cases provided by the evaluator: `tests/assembly`
+    - the sample test cases provided by the evaluator: `tests/`
     - the grading script: `src`
     - the run file: `run`
 
 2. **Simple-Assembler:** This folder contains 
     - Python programme which gives stdin and stdout and is used for automated testing:- `main.py`
     - Python programme that reads from **read.txt** and writes output in **write.txt**:- `readable.py`
+    - Python programme that contains basic decimal-binary conversion functions which are used at many instances in the assembler:- `CONVERTME.py`
+
+3. **SimpleSimulator:** This folder contains
+    - Python program which takes the binary output from `Simple-Assembler/main.py` and contains the main programme for execution of each instruction in class `ee` (execution engine) and the flow of simulator execution and gives the required output in stdout:- `main.py`
+    - `MEM.py` contains the class for program memory and all the memory functions required
+    - `RF.py` contains the class for register data and all the register accessing function required
+    - `PC.py` contains the class for program counter and all the program counter operations required
+    - `opcodes.py` contains all the dictionaries for opcodes and registers and their binary address equivalents
+    - Python programme that contains basic decimal-binary conversion functions which are used at many instances in the simulator:- `CONVERTME.py`
 
 ## **For Q4**
 The following additional instructions are added:
@@ -61,6 +71,7 @@ The above opcodes are taken from the PIC16F84A micro-controller assembly
 ## **Some things to consider**
 - In case the programme reads an empty line, it is ignored in respect to giving output but it is considered in respect to incrementing the programme counter.
 - In case of any errors, the machine code doesn't get printed and the error is displayed in the terminal and the output file, as an assertion error
+- For floating point operations, standard IEEE conventions are followed for maximum and minimum values (no denormal values, neither infinity) respectively being `0.25` and `15.75`
 
 > **Current Lead Branch** -> $main$
 
