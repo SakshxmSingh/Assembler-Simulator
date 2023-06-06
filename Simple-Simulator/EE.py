@@ -161,7 +161,6 @@ class ee:
                     return False, temp_pc
                 
 
-
              #-----------------------type B--------------------------------
             if instruction[0:5] in opcodes.op_codes_B:
                 regA = instruction[6:9]
@@ -236,9 +235,9 @@ class ee:
                 opreg2 = opcodes.regs[instruction[13:16]]
 
                 if instruction[0:5] == '00011':
-                    value = regData.fetchData[opreg2]
-                    regData.writeData[opreg1, value]
-                    temp_pc = progCount + 1
+                    value = regData.fetchData(opreg2)
+                    regData.writeData(opreg1, value)
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc
 
                 elif instruction[0:5] == '00111':
@@ -259,7 +258,7 @@ class ee:
                         remainder = remainder.zfill(16)
                         regData.writeData('R0', quotient)
                         regData.writeData('R1', remainder)
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc
 
 
@@ -271,7 +270,7 @@ class ee:
                         else:
                             value[i] = '0'
                     regData.writeData(opreg2, value)
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc
                 
                 elif instruction[0:5] == '01110':
@@ -283,7 +282,7 @@ class ee:
                         regData.registers['FLAGS'][13] = '1'
                     elif reg1Value == reg2Value:
                         regData.registers['FLAGS'][15] = '1'
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc
 
                 elif instruction[0:5] == '10101':
@@ -291,11 +290,10 @@ class ee:
                     reg2Value = regData.fetchData(opreg2)
                     regData.writeData(opreg1, reg2Value)
                     regData.writeData(opreg2, reg1Value)
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc
 
-            
-            
+
             #------------------------type D-------------------------------
             if instruction[0:5] in opcodes.op_codes_D:
                 workingReg = opcodes.regs[instruction[6:9]]
@@ -304,17 +302,16 @@ class ee:
                 if instruction[0:5] == '00100':
                     value = memData.fetchData(workingMemAddr)
                     regData.writeData(workingReg, value)
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc 
                 
                 elif instruction[0:5] == '00101':
                     value = regData.fetchData(workingReg)
                     memData.writeData(workingMemAddr, value)
-                    temp_pc = progCount + 1
+                    temp_pc = progCount.pc + 1
                     return False, temp_pc
 
-            
-            
+
             #------------------------type E-------------------------------
             if instruction[0:5] in opcodes.op_codes_E:
                 destInt = instruction[9:16]
