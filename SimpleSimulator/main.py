@@ -30,7 +30,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinarySum) > 16: #overflow
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -49,7 +49,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if IntegerDifference < 0:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -71,7 +71,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryMult) > 16: #overflow
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -92,7 +92,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryXOR) > 16: #overflow
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -112,7 +112,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryOR) > 16: #overflow
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -131,7 +131,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if len(BinaryAND) > 16: #overflow
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -151,7 +151,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if FractionSum > 15.75:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -169,7 +169,7 @@ class ee:
                     temp_pc = progCount.pc+1
 
                     if FractionDifference < 0.25 and FractionDifference!=0:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[-4] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -265,7 +265,7 @@ class ee:
                     reg1Value = bin_to_int(regData.fetchData[opreg1])
                     reg2Value = bin_to_int(regData.fetchData[opreg2])
                     if reg2Value == 0:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[12] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
@@ -300,17 +300,17 @@ class ee:
                     reg1Value = bin_to_int(regData.fetchData(opreg1))
                     reg2Value = bin_to_int(regData.fetchData(opreg2))
                     if reg1Value > reg2Value:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[14] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
                     elif reg1Value < reg2Value:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[13] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
                     elif reg1Value == reg2Value:
-                        flag = regData.registers['FLAGS'].split()
+                        flag = list(regData.registers['FLAGS'])
                         flag[15] = '1'
                         flag = ''.join(flag)
                         regData.registers['FLAGS'] = flag
