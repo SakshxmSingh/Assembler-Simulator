@@ -110,7 +110,7 @@ class ee:
                 # for bitwise OR | working, has been tested
                 if instruction[0:5] == '01011':
                     BinaryOR=bin_to_int(regData.registers[regA]) | bin_to_int(regData.registers[regB])
-                    BinaryOR=str(int_to_bin(BinaryXOR))
+                    BinaryOR=str(int_to_bin(BinaryOR))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryOR) > 16: #overflow
@@ -128,7 +128,7 @@ class ee:
                 # for bitwise AND
                 if instruction[0:5] == '01100':
                     BinaryAND=bin_to_int(regData.registers[regA]) & bin_to_int(regData.registers[regB])
-                    BinaryAND=str(int_to_bin(BinaryXOR))
+                    BinaryAND=str(int_to_bin(BinaryAND))
                     temp_pc = progCount.pc+1
 
                     if len(BinaryAND) > 16: #overflow
@@ -261,8 +261,8 @@ class ee:
                     return False, False, temp_pc
 
                 elif instruction[0:5] == '00111':
-                    reg1Value = bin_to_int(regData.fetchData[opreg1])
-                    reg2Value = bin_to_int(regData.fetchData[opreg2])
+                    reg1Value = bin_to_int(regData.fetchData(opreg1))
+                    reg2Value = bin_to_int(regData.fetchData(opreg2))
                     if reg2Value == 0:
                         flag = list(regData.registers['FLAGS'])
                         flag[12] = '1'
@@ -288,11 +288,13 @@ class ee:
 
                 elif instruction[0:5] == '01101':
                     value = regData.fetchData(opreg2)
+                    value = list(value)
                     for i in range(16):
                         if value[i] == '0':
                             value[i] = '1'
                         else:
                             value[i] = '0'
+                    value = ''.join(value)
                     regData.writeData(opreg1, value)
                     temp_pc = progCount.pc + 1
                     return False, False, temp_pc

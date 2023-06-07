@@ -33,7 +33,7 @@ op_codes_B = {
 op_codes_C = {
     'mov': '00011',
     'div': '00111',
-    'not': '01001',
+    'not': '01101',
     'cmp': '01110',
     'swapf': '10101'
 }
@@ -117,11 +117,11 @@ var_count = 0
 for i in range(len(input_list)):
     input_list[i] = input_list[i].split()
 
-    if input_list[i][0] != 'var':
-        prog_count += 1
-
     if len(input_list[i]) == 0:   # ignore empty lines
         continue
+
+    if input_list[i][0] != 'var':
+        prog_count += 1
 
     if input_list[i][0][-1] == ':':     # labels
         labels.update(
@@ -497,8 +497,8 @@ def output_func(line):
         if (line[1] not in vars):
             vars.update({line[1]: bin(var_index)[2:]})
         else:
-            print("Variable already exists. (line"+ str(output_prog_count)+ ")")
-            assert 0 == 1, f"Variable already exists. (line {output_prog_count})"
+            pass
+            # assert 0 == 1, f"Variable already exists. (line {output_prog_count})"
 
         if len(vars[line[1]]) == 7:
             pass
