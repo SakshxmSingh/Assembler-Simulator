@@ -1,4 +1,5 @@
-# CSE112_AssProject_B75 - Assembler Simulator
+# Assembler-Simulator
+Assembler Simulator Project associated with IIIT-D
 
 **Course:** CSE112 </br>
 **Course Title:** Computer Organisation </br>
