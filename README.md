@@ -3,7 +3,8 @@ Assembler Simulator Project associated with IIIT-D
 
 **Course:** CSE112 </br>
 **Course Title:** Computer Organisation </br>
-**Project Type:** Group project</br>  
+**Project Type:** Group project </br>
+**Group No:** B75
 
 ## **Group Motto**
 >a lot of commits, but never no commitments
